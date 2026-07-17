@@ -106,7 +106,8 @@ summary:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
 
 /* ---- 資産チェックリスト ---- */
 .assets{display:grid;gap:1rem;margin-top:.6rem}
-.acol h3{margin-bottom:.4rem;font-size:.8rem;letter-spacing:.06em}
+.acol h3{margin-bottom:.2rem;font-size:.8rem;letter-spacing:.06em}
+.colnote{font-size:.75rem;color:var(--muted);line-height:1.7;margin-bottom:.5rem}
 .acol.inc h3{color:var(--ink)}
 .acol.exc h3{color:var(--muted)}
 .alist{list-style:none;display:grid;gap:.15rem}
@@ -351,22 +352,25 @@ ja:{
  s4defQ:'納税を先延ばしにする制度（納税猶予）も使う予定がある',
  s4defNote:'いま払うお金がない場合の選択肢です。使うには、担保を出すことと、申告書にその旨を書くことが必要です。チェックすると、猶予に関わる期限もタイムラインに出ます。',
 
- s5no:'STEP 5', s5q:'基準日の時点で、次のものを合計するといくらになりますか。',
+ s5no:'STEP 5', s5q:'基準日の時点で、次のものの時価を合計するといくらになりますか。',
  s5basisAt:'あなたの基準日：出国日の値段で評価します。',
  s5basis3m:'あなたの基準日：{date}（出国予定日のちょうど3か月前）の値段で評価します。',
- s5inc:'数えるもの', s5exc:'数えないもの',
- s5amount:'合計（円）',
- s5where:'証券会社の口座画面にある「評価額合計」がいちばん近い数字です。複数の口座があれば足してください。含み損の出ているものも、マイナスではなくその日の値段のまま足します。',
+ s5inc:'合計に入れるもの',
+ s5incNote:'基準日の時価を入れます。買ったときの値段ではありません。',
+ s5exc:'合計に入れないもの',
+ s5excNote:'いくら持っていても、1億円の判定には関係しません。',
+ s5amount:'時価の合計（円）',
+ s5where:'証券会社の口座画面にある「評価額合計」がいちばん近い数字です。複数の口座があれば、すべて合計してください。含み損の出ているものも、マイナスではなくその日の値段のまま合計に入れます。',
  s5fxSum:'外貨建ての資産をお持ちの方へ',
  s5fxWho:'円に直す方法の説明です。円建てだけの方は開く必要はありません。',
  s5fxNote:'基準日のTTM（対顧客直物電信売相場と買相場の仲値）で円に直します。TTBでもTTSでもありません（所得税基本通達60の2-8）。レートは取引のある金融機関が公表しているものを使ってください。このツールはレートを自動では取りません。取ってしまうと、正しそうに見える間違った数字になるからです。合計が1億円から大きく離れているなら、おおまかな換算で足ります。1億円の前後1割に入るなら、正確なTTMで計算してください。',
  s5rsSum:'勤務先から株式やストックオプションを受け取っている方へ',
- s5rsWho:'数えなくてよいものがあります。自社株を持っていない方は開く必要はありません。',
- s5rsNote:'次の2つは数えません。①譲渡制限がまだ解除されていない特定譲渡制限付株式（権利が確定していないRSU）②税制適格ストックオプションの権利を表す有価証券。いずれも国内源泉所得を生ずべきものに限ります。すでに権利が確定して自由に売れる状態の株式は、ふつうに数えてください。',
+ s5rsWho:'合計に入れなくてよいものがあります。自社株を持っていない方は開く必要はありません。',
+ s5rsNote:'次の2つは合計に入れません。①譲渡制限がまだ解除されていない特定譲渡制限付株式（権利が確定していないRSU）②税制適格ストックオプションの権利を表す有価証券。いずれも国内源泉所得を生ずべきものに限ります。すでに権利が確定して自由に売れる状態の株式は、ふつうに合計へ入れてください。',
 
  a_listedStock:'上場株式', a_unlistedStock:'非上場株式（自社株・同族会社の株式など）',
  a_fund:'投資信託', a_bond:'公社債（国債・社債・割引債など）',
- a_nisa:'NISA口座内の資産', a_nisaNote:'売っても税金がかからない口座ですが、この判定には数えます',
+ a_nisa:'NISA口座内の資産', a_nisaNote:'売っても税金がかからない口座ですが、合計には入れます',
  a_tokumeiKumiai:'匿名組合契約の出資持分',
  a_marginTrading:'未決済の信用取引', a_whenIssued:'未決済の発行日取引',
  a_derivative:'未決済のデリバティブ取引（先物・オプション・FXなど）',
@@ -375,7 +379,7 @@ ja:{
  a_niniKumiai:'任意組合契約の出資持分', a_niniNote:'匿名組合とは扱いが逆です',
  a_unvestedRS:'権利が確定していない譲渡制限付株式（RSU）',
  a_qualifiedSO:'税制適格ストックオプション',
- a_overseasNote:'海外の証券口座で持っているものも数えます。',
+ a_overseasNote:'海外の証券口座で持っているものも合計に入れます。',
 
  v_subject:'対象になります',
  v_notSubject:'対象になりません',
@@ -502,22 +506,25 @@ en:{
  s4defQ:'I also plan to defer the payment',
  s4defNote:'An option if you cannot pay now. It requires posting security and stating the election on your return. Tick this and the deferral deadlines are added to the timeline.',
 
- s5no:'STEP 5', s5q:'What is the total value of the following on your valuation date?',
+ s5no:'STEP 5', s5q:'What is the total market value of the following on your valuation date?',
  s5basisAt:'Your valuation date: the value on the date of departure.',
  s5basis3m:'Your valuation date: the value on {date}, exactly three months before your planned departure.',
- s5inc:'Counted', s5exc:'Not counted',
- s5amount:'Total (JPY)',
- s5where:'The closest figure is the total valuation shown in your brokerage account. Add up all accounts. Holdings sitting at a loss are added at their value on the day, not as a negative.',
+ s5inc:'Included in the total',
+ s5incNote:'Taken at the market price on your valuation date, not at what you paid.',
+ s5exc:'Left out of the total',
+ s5excNote:'However much of these you hold, they do not affect the 100 million yen test.',
+ s5amount:'Total market value (JPY)',
+ s5where:'The closest figure is the total valuation shown in your brokerage account. Add up every account you hold. Holdings sitting at a loss go into the total at their value on the day, not as a negative.',
  s5fxSum:'For people holding assets in foreign currency',
  s5fxWho:'How to convert into yen. Skip this if everything is in yen.',
  s5fxNote:'Convert at the TTM (the mid rate between the TTS and TTB, not the TTB or TTS itself) on your valuation date, as published by a financial institution you deal with. This follows NTA circular 60-2-8. This tool does not fetch rates. A fetched rate would look right and be wrong. If your total is far from 100 million yen, a rough conversion is enough. Within ten per cent either side, use the actual TTM.',
  s5rsSum:'For people holding employer shares or stock options',
- s5rsWho:'Some holdings are not counted. Skip this if you hold no employer shares.',
- s5rsNote:'Two things are not counted: restricted stock whose transfer restriction has not yet been lifted (unvested RSUs), and securities representing tax-qualified stock options. Both only where they would produce Japan-source income. Shares that have vested and are freely sellable are counted normally.',
+ s5rsWho:'Some holdings stay out of the total. Skip this if you hold no employer shares.',
+ s5rsNote:'Two things stay out of the total: restricted stock whose transfer restriction has not yet been lifted (unvested RSUs), and securities representing tax-qualified stock options. Both only where they would produce Japan-source income. Shares that have vested and are freely sellable go into the total as normal.',
 
  a_listedStock:'Listed shares', a_unlistedStock:'Unlisted shares (own company, family company)',
  a_fund:'Investment trusts', a_bond:'Bonds (government, corporate, discount bonds)',
- a_nisa:'Assets in a NISA account', a_nisaNote:'Tax-free on sale, but still counted here',
+ a_nisa:'Assets in a NISA account', a_nisaNote:'Tax-free on sale, but it still goes into the total',
  a_tokumeiKumiai:'Interests in a silent partnership (tokumei kumiai)',
  a_marginTrading:'Open margin trades', a_whenIssued:'Open when-issued trades',
  a_derivative:'Open derivatives (futures, options, FX)',
@@ -526,7 +533,7 @@ en:{
  a_niniKumiai:'Interests in a general partnership (nini kumiai)', a_niniNote:'Treated the opposite way to a silent partnership',
  a_unvestedRS:'Unvested restricted stock (RSU)',
  a_qualifiedSO:'Tax-qualified stock options',
- a_overseasNote:'Holdings in overseas brokerage accounts are counted too.',
+ a_overseasNote:'Holdings in overseas brokerage accounts go into the total too.',
 
  v_subject:'This applies to you',
  v_notSubject:'This does not apply to you',
@@ -870,10 +877,12 @@ function skeleton(){
   <p class="help" id="basis-line"></p>
   <div class="assets">
     <div class="acol inc"><h3 data-t="s5inc"></h3>
+      <p class="colnote" data-t="s5incNote"></p>
       <ul class="alist">${RULES.assets.included.map(a=>asset(a)).join('')}</ul>
       <p class="anote" style="margin-top:.35rem" data-t="a_overseasNote"></p>
     </div>
     <div class="acol exc"><h3 data-t="s5exc"></h3>
+      <p class="colnote" data-t="s5excNote"></p>
       <ul class="alist">${RULES.assets.excludedCommon.map(a=>asset(a)).join('')}</ul>
     </div>
   </div>
