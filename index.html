@@ -46,8 +46,8 @@ h3{font-family:var(--gothic);font-size:.92rem;font-weight:700;letter-spacing:.03
   border-bottom:2px solid var(--ink);padding-bottom:1rem;margin-bottom:1.1rem}
 .tagline{font-size:.82rem;color:var(--muted);margin-top:.35rem;line-height:1.7}
 .langsw{display:grid;grid-template-columns:auto auto;border:1px solid var(--rule);background:var(--card)}
-.langsw button{font-family:var(--mono);font-size:.72rem;padding:.3rem .6rem;border:0;
-  background:transparent;color:var(--muted);cursor:pointer;letter-spacing:.08em}
+.langsw button{font-family:var(--mono);font-size:.72rem;padding:.3rem .6rem;min-height:2.4rem;
+  min-width:2.75rem;border:0;background:transparent;color:var(--muted);cursor:pointer;letter-spacing:.08em}
 .langsw button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
 .langsw button:focus-visible{outline:2px solid var(--signal);outline-offset:-2px}
 
@@ -64,7 +64,8 @@ h3{font-family:var(--gothic);font-size:.92rem;font-weight:700;letter-spacing:.03
 
 .choices{display:grid;gap:.4rem;margin-top:.6rem}
 .choices.two{grid-template-columns:1fr 1fr}
-.choices button{font-family:var(--gothic);font-size:.87rem;padding:.6rem .5rem;
+/* タップ領域は44px以上（WCAG 2.5.5）。主要ユーザーは40代以上を想定。 */
+.choices button{font-family:var(--gothic);font-size:.87rem;padding:.6rem .5rem;min-height:2.75rem;
   border:1px solid var(--rule);background:var(--paper);color:var(--ink-2);cursor:pointer;
   text-align:center;line-height:1.5}
 .choices button:hover{border-color:var(--ink);color:var(--ink)}
@@ -72,8 +73,8 @@ h3{font-family:var(--gothic);font-size:.92rem;font-weight:700;letter-spacing:.03
 .choices button:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
 
 input[type=date],input[type=text]{font-family:var(--mono);font-variant-numeric:tabular-nums;
-  font-size:.95rem;padding:.5rem .6rem;border:1px solid var(--rule);background:var(--paper);
-  color:var(--ink);width:100%;max-width:15rem}
+  font-size:.95rem;padding:.5rem .6rem;min-height:2.75rem;border:1px solid var(--rule);
+  background:var(--paper);color:var(--ink);width:100%;max-width:15rem}
 input:focus-visible{outline:2px solid var(--signal);outline-offset:1px}
 .field{display:grid;gap:.3rem;margin-top:.5rem}
 .sidenote{font-size:.75rem;color:var(--muted);line-height:1.7}
@@ -81,7 +82,8 @@ input:focus-visible{outline:2px solid var(--signal);outline-offset:1px}
 /* ---- 折りたたみ：開く前に「誰が開くべきか」を常時表示 ---- */
 details{border-top:1px solid var(--rule-2);margin-top:.9rem;padding-top:.7rem}
 summary{cursor:pointer;font-size:.82rem;font-weight:600;color:var(--ink-2);list-style:none;
-  display:grid;grid-template-columns:1rem 1fr;gap:.4rem;align-items:start}
+  display:grid;grid-template-columns:1rem 1fr;gap:.4rem;align-items:start;
+  min-height:2.75rem;align-content:center}
 summary::-webkit-details-marker{display:none}
 summary::before{content:"＋";font-family:var(--mono);color:var(--muted);font-size:.8rem}
 details[open] summary::before{content:"−"}
@@ -93,7 +95,7 @@ summary:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
 
 /* 任意の選択肢はチェックボックス。折りたたみで二重に関門を作らない。 */
 .check{display:grid;grid-template-columns:1.1rem 1fr;gap:.6rem;align-items:start;cursor:pointer;
-  margin-top:.9rem;padding-top:.85rem;border-top:1px solid var(--rule-2)}
+  margin-top:.9rem;padding-top:.85rem;border-top:1px solid var(--rule-2);min-height:2.75rem}
 .check[hidden]{display:none}
 .check input{appearance:none;-webkit-appearance:none;width:1.1rem;height:1.1rem;margin:.2rem 0 0;
   border:1px solid var(--muted);background:var(--paper);cursor:pointer;display:grid;place-content:center}
@@ -123,10 +125,11 @@ summary:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
 .prow span{font-size:.8rem;color:var(--muted)}
 .prow input{max-width:none}
 .prow button{border:1px solid var(--rule);background:var(--paper);color:var(--muted);
-  cursor:pointer;font-family:var(--mono);font-size:.8rem;padding:.35rem .55rem;line-height:1}
+  cursor:pointer;font-family:var(--mono);font-size:.8rem;padding:.35rem .55rem;line-height:1;
+  min-height:2.75rem;min-width:2.75rem}
 .prow button:hover{border-color:var(--signal);color:var(--signal)}
 .addrow{border:1px dashed var(--rule);background:transparent;color:var(--ink-2);cursor:pointer;
-  font-family:var(--gothic);font-size:.8rem;padding:.45rem;width:100%}
+  font-family:var(--gothic);font-size:.8rem;padding:.45rem;width:100%;min-height:2.75rem}
 .addrow:hover{border-color:var(--ink)}
 
 /* ---- 結果 ---- */
@@ -172,6 +175,9 @@ summary:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
 .approx{font-family:var(--mono);font-size:.65rem;color:var(--muted);border:1px solid var(--rule);
   padding:0 .2rem;margin-left:.3rem;letter-spacing:.04em}
 
+/* ---- 印刷専用の入力サマリー ---- */
+.printsum{display:none}
+
 /* ---- 出典・免責 ---- */
 .sec{margin-top:2.2rem}
 .srclist{list-style:none;display:grid;gap:.3rem}
@@ -186,8 +192,8 @@ a:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
 .disc strong{color:var(--ink)}
 
 .tools{display:grid;grid-template-columns:auto auto auto;gap:.4rem;justify-content:start;margin-top:1.3rem}
-.tools button{font-family:var(--gothic);font-size:.78rem;padding:.42rem .8rem;border:1px solid var(--rule);
-  background:var(--card);color:var(--ink-2);cursor:pointer}
+.tools button{font-family:var(--gothic);font-size:.78rem;padding:.42rem .8rem;min-height:2.75rem;
+  border:1px solid var(--rule);background:var(--card);color:var(--ink-2);cursor:pointer}
 .tools button:hover{border-color:var(--ink);color:var(--ink)}
 .tools button:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
 
@@ -212,6 +218,12 @@ footer{border-top:1px solid var(--rule);margin-top:2.6rem;padding-top:1rem;
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .langsw,.tools,.step:not(.printable),.addrow{display:none!important}
   .result{border:2px solid #000;break-inside:avoid}
+  .printsum{display:block;margin-top:.9rem;border-top:1px solid var(--rule);padding-top:.7rem}
+  .printsum h3{font-size:8pt;letter-spacing:.08em;color:#555;margin-bottom:.35rem}
+  .printsum table{width:100%;border-collapse:collapse}
+  .printsum th{text-align:left;font-weight:400;color:#555;width:12em;padding:.12rem 0;
+    vertical-align:top;font-size:8.5pt;white-space:nowrap}
+  .printsum td{font-family:var(--mono);font-variant-numeric:tabular-nums;padding:.12rem 0;font-size:8.5pt}
   .tl{break-inside:avoid}
   .tli.crit .tlabel,.tli.crit .tdate,.tli.crit .tdelta{color:var(--signal)!important}
   .tli.crit::before{background:var(--signal)!important;border-color:var(--signal)!important}
@@ -246,6 +258,7 @@ footer{border-top:1px solid var(--rule);margin-top:2.6rem;padding-top:1rem;
   <button type="button" id="btn-share"></button>
   <button type="button" id="btn-reset"></button>
 </div>
+<p class="sidenote" id="t-sharenote" style="margin-top:.6rem"></p>
 
 <section class="sec"><h2 id="t-src-h"></h2>
   <ul class="srclist" id="src-primary"></ul>
@@ -342,6 +355,9 @@ ja:{
  s3yes:'ずっと日本', s3nono:'海外にいた時期がある',
  s3plabel:'日本に住んでいた期間',
  s3from:'から', s3to:'まで', s3add:'＋ 期間を追加', s3del:'削除',
+ s3defSum:'過去に国外転出時課税で納税猶予を受けたことがある方へ',
+ s3defWho:'海外にいた期間でも、日本にいた期間として数える場合があります。初めて出国する方は開く必要はありません。',
+ s3defNote:'過去に国外転出時課税制度の納税猶予の特例を受けていた期間は、日本に住所も居所も無かった期間であっても、この10年5年超の判定では国内在住期間に含めます。上の期間入力に、その期間も足してください。',
  s3visaSum:'日本国籍ではない方へ',
  s3visaWho:'在留資格によっては、日本にいた期間が数えられません。日本国籍の方は開く必要はありません。',
  s3visaNote:'次の在留資格で在留していた期間は、この10年5年超の判定では日本にいた期間に数えません（外交・教授・芸術・経営／管理・法律／会計業務・医療・研究・教育・企業内転勤・短期滞在・留学など）。上の期間入力から、その期間を外してください。また、2015年6月30日までに永住者・永住者の配偶者等・定住者などで在留していた期間も数えません。',
@@ -360,13 +376,13 @@ ja:{
  s5exc:'合計に入れないもの',
  s5excNote:'いくら持っていても、1億円の判定には関係しません。',
  s5amount:'時価の合計（円）',
- s5where:'証券会社の口座画面にある「評価額合計」がいちばん近い数字です。複数の口座があれば、すべて合計してください。含み損の出ているものも、マイナスではなくその日の値段のまま合計に入れます。',
+ s5where:'証券会社の口座画面にある「評価額合計」がいちばん近い数字です。複数の口座があれば、すべて合計してください。株式や投資信託は、含み損が出ていてもマイナスにはせず、その日の値段のまま合計に入れます。未決済の信用取引・発行日取引・デリバティブだけは例外で、値段ではなく「決済したとみなした場合の利益または損失の額」を入れるため、損失ならマイナスになります。',
  s5fxSum:'外貨建ての資産をお持ちの方へ',
  s5fxWho:'円に直す方法の説明です。円建てだけの方は開く必要はありません。',
  s5fxNote:'基準日のTTM（対顧客直物電信売相場と買相場の仲値）で円に直します。TTBでもTTSでもありません（所得税基本通達60の2-8）。レートは取引のある金融機関が公表しているものを使ってください。このツールはレートを自動では取りません。取ってしまうと、正しそうに見える間違った数字になるからです。合計が1億円から大きく離れているなら、おおまかな換算で足ります。1億円の前後1割に入るなら、正確なTTMで計算してください。',
  s5rsSum:'勤務先から株式やストックオプションを受け取っている方へ',
  s5rsWho:'合計に入れなくてよいものがあります。自社株を持っていない方は開く必要はありません。',
- s5rsNote:'次の2つは合計に入れません。①譲渡制限がまだ解除されていない特定譲渡制限付株式（権利が確定していないRSU）②税制適格ストックオプションの権利を表す有価証券。いずれも国内源泉所得を生ずべきものに限ります。すでに権利が確定して自由に売れる状態の株式は、ふつうに合計へ入れてください。',
+ s5rsNote:'次の2つは合計に入れません。①譲渡制限がまだ解除されていない特定譲渡制限付株式（権利が確定していないRSU）②税制適格ストックオプションの権利を表す有価証券。ただし法令では、どちらも「国内源泉所得を生ずべきもの」に限る、とされています。その所得の源泉が日本かどうかで扱いが分かれるため、海外の親会社から受け取っている場合など、源泉がはっきりしないときは、ここだけは税理士にご確認ください。すでに権利が確定して自由に売れる状態の株式は、ふつうに合計へ入れてください。',
 
  a_listedStock:'上場株式', a_unlistedStock:'非上場株式（自社株・同族会社の株式など）',
  a_fund:'投資信託', a_bond:'公社債（国債・社債・割引債など）',
@@ -425,13 +441,13 @@ ja:{
 
  tlHead:'出国予定日 {date} からの逆算',
  tl_valuationDate:'この日の値段で評価される（出国予定日のちょうど3か月前）',
- tl_taxAgentDeadline:'納税管理人の届出はこの日まで。過ぎると、納税猶予も減額措置も帰国したときの救済も、すべて使えなくなります',
+ tl_taxAgentDeadline:'納税管理人の届出はこの日まで。過ぎると納税猶予が使えず、出国までに全額を納めることになります。価額が下がったときの減額も、外国税額控除も、猶予を条件とするので一緒に消えます',
  tl_filingNoAgent:'準確定申告と納税はこの日まで（出国の時まで）',
  tl_filingWithAgent:'確定申告と納税の期限',
  tl_collateral:'担保の提供もこの日まで',
  tl_continuationNotice:'継続適用届出書をこの日までに提出（猶予が終わるまで続きます）',
  tl_extensionNotice:'猶予を5年延ばすなら、この日までに期限延長届出書',
- tl_revocationLimit:'この日までに帰国して持ち続けていれば、課税を取り消せる（帰国から4か月以内に更正の請求）',
+ tl_revocationLimit:'この日までに帰国して持ち続けていれば、課税を取り消せる（帰国から4か月以内に更正の請求）。これだけは納税管理人の届出がなくても使えます',
  tl_deferralDue:'猶予した所得税と利子税の納期限（出国から5年4か月）',
  tl_deferralDueExt:'延長した場合の納期限（出国から10年4か月）',
  tl_today:'今日',
@@ -442,13 +458,16 @@ ja:{
 
  statuteHead:'知らずに出国した場合',
  statuteBody:'この制度が関係する所得税の更正・決定の期間制限は原則7年です。納税管理人の届出と税務代理権限証書の提出があれば5年になります。つまり、届け出ずに出国した場合、7年間さかのぼって課税される可能性があります。',
+ fxCreditHead:'移住先でも同じ含み益に課税されたら',
+ fxCreditBody:'日本は出国の時点の含み益に課税します。その後、移住先の国で実際に売ると、その国も同じ利益に課税することがあります。同じ儲けに二重に課税される状態です。この場合、納税猶予を使っていれば、外国所得税を納付することとなる日から4か月以内に更正の請求をすることで、外国税額控除を適用できます。ただしこの措置は納税猶予を受けていることが条件なので、猶予を使わずに出国前に納めきった方は使えません。贈与・相続の場合も対象外です。移住先の税制と合わせた判断になるため、税理士にご相談ください。',
+ shareNote:'リンクには、入力した金額や日付がそのまま含まれます。税理士など、渡してよい相手かをご確認ください。サーバーには送られませんが、ブラウザの履歴には残ります。',
 
  inheritSum:'ご家族が1億円以上の有価証券等をお持ちで、相続人に海外在住の方がいる場合',
  inheritWho:'本人の出国だけでなく、相続でも同じ課税が起きます。ご自身の出国だけを調べたい方は開く必要はありません。',
  inheritBody:'1億円以上の対象資産を持つ居住者が亡くなり、海外に住む相続人や受遺者がその資産を取得すると、亡くなった方に所得税がかかります（国外転出（相続）時課税）。準確定申告の期限は、相続があったことを知った日の翌日から4か月を経過した日の前日です。資産を取得しない相続人も申告が必要です。海外在住の相続人が複数いる場合、納税管理人の届出は全員の連署でします。限定承認の場合はこの制度は適用されませんが、別の規定でみなし譲渡課税が生じます。ここは判定が重く、遺産分割の状況にも左右されるため、このツールでは判定せず案内にとどめます。該当しそうなら税理士にご相談ください。',
  giftSum:'海外に住むご家族へ有価証券等を贈与する予定がある場合',
  giftWho:'贈与でも同じ課税が起きます。贈与の予定がない方は開く必要はありません。',
- giftBody:'1億円以上の対象資産を持つ居住者が、海外に住む親族等へその一部でも贈与すると、贈与した側に所得税がかかります（国外転出（贈与）時課税）。1億円の判定は、贈与した分だけでなく、贈与の時に持っていた対象資産の全部の合計で行います。申告期限は贈与した年の翌年3月15日です。',
+ giftBody:'1億円以上の対象資産を持つ居住者が、海外に住む親族等へその一部でも贈与すると、贈与した側に所得税がかかります（国外転出（贈与）時課税）。1億円の判定は、贈与した分だけでなく、贈与の時に持っていた対象資産の全部の合計で行います。申告期限は贈与した年の翌年3月15日です。贈与する方が日本に住み続ける場合、納税猶予を受けるのに納税管理人の届出は要りません（ただし猶予期間中にご自身が出国するなら、その時までに届出が必要です）。なお、贈与と相続では外国税額控除は使えません。',
 
  estSum:'含み益のおおよその金額が分かっている方へ',
  estWho:'税額の桁を知るためのものです。取得価額が分からない方は開く必要はありません。',
@@ -471,6 +490,15 @@ ja:{
  discHead:'免責事項',
  disc:'このツールは制度の存在に気づくためのものであり、税務上の助言ではありません。作成者は税理士ではありません。判定結果は入力された内容だけに基づく目安で、正確性・完全性を保証しません。実際の申告・納税・届出は、必ず税理士または所轄の税務署にご確認ください。特に、非上場株式の時価、住所や居所の認定、在留資格による期間の除外は、専門家の判断が必要な領域です。このツールの利用によって生じたいかなる損害についても、作成者は責任を負いません。',
 
+ ps_head:'入力した内容',
+ ps_stay:'出国前10年間の居住',
+ ps_agent:'納税管理人の届出',
+ ps_deferral:'納税猶予',
+ ps_basis:'評価の基準日',
+ ps_total:'対象資産の時価合計（円）',
+ ps_gain:'含み益の概算（円）',
+ ps_on:'この判定を出した日',
+ ps_yes:'予定あり', ps_no:'予定なし',
  btnPrint:'印刷 / PDF', btnShare:'この条件のリンクをコピー', btnReset:'最初から',
  shareCopied:'リンクをコピーしました', shareFailed:'コピーできませんでした。URLを手動でコピーしてください',
  copyright:'© 2026 fpyamamoto. All Rights Reserved.・無断複製・再配布を禁じます'
@@ -496,6 +524,9 @@ en:{
  s3yes:'Continuously in Japan', s3nono:'I spent time abroad',
  s3plabel:'Periods living in Japan',
  s3from:'from', s3to:'to', s3add:'+ Add a period', s3del:'Remove',
+ s3defSum:'For people who have taken the exit tax deferral before',
+ s3defWho:'Time spent abroad can still count as time in Japan. Skip this if this is your first departure.',
+ s3defNote:'Any period during which you were using the exit tax deferral counts towards the five-year test as time in Japan, even though you had no home or residence here. Add those periods to the entries above.',
  s3visaSum:'For people who are not Japanese nationals',
  s3visaWho:'Some residence statuses mean your time in Japan is not counted. Japanese nationals need not open this.',
  s3visaNote:'Time spent under certain residence statuses does not count towards the five-year test (diplomat, professor, artist, business manager, legal and accounting services, medical, researcher, instructor, intra-company transferee, temporary visitor, student, and others). Exclude those periods above. Time spent before 30 June 2015 as a permanent resident, spouse of a permanent resident or long-term resident is also not counted.',
@@ -514,13 +545,13 @@ en:{
  s5exc:'Left out of the total',
  s5excNote:'However much of these you hold, they do not affect the 100 million yen test.',
  s5amount:'Total market value (JPY)',
- s5where:'The closest figure is the total valuation shown in your brokerage account. Add up every account you hold. Holdings sitting at a loss go into the total at their value on the day, not as a negative.',
+ s5where:'The closest figure is the total valuation shown in your brokerage account. Add up every account you hold. Shares and funds go in at their price on the day even when they sit at a loss, never as a negative. Open margin trades, when-issued trades and derivatives are the exception: they go in as the gain or loss you would realise on settling them, so a loss goes in as a negative.',
  s5fxSum:'For people holding assets in foreign currency',
  s5fxWho:'How to convert into yen. Skip this if everything is in yen.',
  s5fxNote:'Convert at the TTM (the mid rate between the TTS and TTB, not the TTB or TTS itself) on your valuation date, as published by a financial institution you deal with. This follows NTA circular 60-2-8. This tool does not fetch rates. A fetched rate would look right and be wrong. If your total is far from 100 million yen, a rough conversion is enough. Within ten per cent either side, use the actual TTM.',
  s5rsSum:'For people holding employer shares or stock options',
  s5rsWho:'Some holdings stay out of the total. Skip this if you hold no employer shares.',
- s5rsNote:'Two things stay out of the total: restricted stock whose transfer restriction has not yet been lifted (unvested RSUs), and securities representing tax-qualified stock options. Both only where they would produce Japan-source income. Shares that have vested and are freely sellable go into the total as normal.',
+ s5rsNote:'Two things stay out of the total: restricted stock whose transfer restriction has not yet been lifted (unvested RSUs), and securities representing tax-qualified stock options. The statute limits both to what would produce Japan-source income, so the answer turns on where the income arises. If yours come from an overseas parent company, or the source is otherwise unclear, take this one point to a tax accountant. Shares that have vested and are freely sellable go into the total as normal.',
 
  a_listedStock:'Listed shares', a_unlistedStock:'Unlisted shares (own company, family company)',
  a_fund:'Investment trusts', a_bond:'Bonds (government, corporate, discount bonds)',
@@ -579,13 +610,13 @@ en:{
 
  tlHead:'Counting back from {date}',
  tl_valuationDate:'Your assets are valued at this day, exactly three months before departure',
- tl_taxAgentDeadline:'Register a tax agent by this day. After it, deferral, reductions and the relief on returning to Japan are all gone',
+ tl_taxAgentDeadline:'Register a tax agent by this day. Miss it and there is no deferral: you pay in full before you leave. The relief when prices fall and the foreign tax credit both depend on the deferral, so they go with it',
  tl_filingNoAgent:'File and pay by this day, before you leave',
  tl_filingWithAgent:'Filing and payment deadline',
  tl_collateral:'Post security by this day too',
  tl_continuationNotice:'File the continued-application notice by this day, until the deferral ends',
  tl_extensionNotice:'To extend deferral by five years, file the extension notice by this day',
- tl_revocationLimit:'Return by this day still holding the assets and the charge can be cancelled (claim within four months of returning)',
+ tl_revocationLimit:'Return by this day still holding the assets and the charge can be cancelled (claim within four months of returning). This one alone survives without a tax agent',
  tl_deferralDue:'Deferred tax and interest fall due (five years and four months after departure)',
  tl_deferralDueExt:'Due date if extended (ten years and four months after departure)',
  tl_today:'Today',
@@ -596,13 +627,16 @@ en:{
 
  statuteHead:'If you leave without knowing',
  statuteBody:'The assessment period for income tax involving this rule is seven years as a rule, reduced to five where a tax agent is registered and a power of attorney filed. Leaving without registering exposes seven years to reassessment.',
+ fxCreditHead:'If your new country taxes the same gain',
+ fxCreditBody:'Japan taxes the gain as it stands on the day you leave. When you later sell in your new country, that country may tax the same gain again. Where that happens you can claim a foreign tax credit by filing a request for correction within four months of the day the foreign tax becomes payable. This relief depends on being in the deferral, so it is closed to anyone who paid in full before leaving. It is also unavailable for the gift and inheritance versions of the rule. The answer depends on your new country as much as on Japan, so take it to a tax accountant.',
+ shareNote:'The link carries the amounts and dates you entered. Check who you are sending it to. Nothing goes to a server, but it does stay in your browser history.',
 
  inheritSum:'If a family member holds 100 million yen or more in securities and an heir lives abroad',
  inheritWho:'The same charge arises on inheritance, not only on your own departure. Skip this if you only want your own case.',
  inheritBody:'If a resident holding 100 million yen or more in covered assets dies and an heir or legatee living abroad receives them, income tax is charged on the deceased. The return is due the day before four months have elapsed from the day after the death became known. Heirs who receive none of the assets must still file. Where several heirs live abroad, the tax agent registration is filed jointly by all of them. A qualified acceptance takes the case outside this rule, though a deemed-transfer charge arises under another provision. This is a heavy assessment that depends on how the estate is divided, so this tool flags it rather than deciding it. Take it to a tax accountant.',
  giftSum:'If you plan to give securities to a family member living abroad',
  giftWho:'The same charge arises on gifts. Skip this if you plan no gift.',
- giftBody:'If a resident holding 100 million yen or more in covered assets gifts any part of them to a relative living abroad, income tax is charged on the giver. The 100 million yen test looks at everything held at the time of the gift, not only the part given. The return is due on 15 March of the following year.',
+ giftBody:'If a resident holding 100 million yen or more in covered assets gifts any part of them to a relative living abroad, income tax is charged on the giver. The 100 million yen test looks at everything held at the time of the gift, not only the part given. The return is due on 15 March of the following year. A giver who stays in Japan needs no tax agent to take the deferral, though one is needed if the giver later leaves during the deferral period. Note that the foreign tax credit is not available for the gift or inheritance versions of this rule.',
 
  estSum:'If you already know your approximate unrealised gain',
  estWho:'This gives the order of magnitude of the tax. Skip it if you do not know your acquisition cost.',
@@ -625,6 +659,15 @@ en:{
  discHead:'Disclaimer',
  disc:'This tool exists so that people notice the rule. It is not tax advice, and its author is not a licensed tax accountant. The result is an indication based only on what you entered, with no warranty of accuracy or completeness. Confirm any filing, payment or registration with a licensed tax accountant or your tax office. The valuation of unlisted shares, the finding of residence, and the exclusion of periods by residence status all need professional judgement. This tool is aimed at residents of Japan; the rule described is Japanese law and has no application elsewhere. The author accepts no liability for any loss arising from its use.',
 
+ ps_head:'What you entered',
+ ps_stay:'Time in Japan, last 10 years',
+ ps_agent:'Tax agent registration',
+ ps_deferral:'Deferral',
+ ps_basis:'Valuation date',
+ ps_total:'Total market value (JPY)',
+ ps_gain:'Estimated unrealised gain (JPY)',
+ ps_on:'Result produced on',
+ ps_yes:'planned', ps_no:'not planned',
  btnPrint:'Print / PDF', btnShare:'Copy a link to these answers', btnReset:'Start over',
  shareCopied:'Link copied', shareFailed:'Could not copy. Please copy the URL manually',
  copyright:'© 2026 fpyamamoto. All Rights Reserved. Unauthorised reproduction or redistribution is prohibited.'
@@ -856,6 +899,9 @@ function skeleton(){
   <details><summary><span data-t="s3visaSum"></span><span class="whofor" data-t="s3visaWho"></span></summary>
     <div class="dbody"><p class="sidenote" data-t="s3visaNote"></p></div>
   </details>
+  <details><summary><span data-t="s3defSum"></span><span class="whofor" data-t="s3defWho"></span></summary>
+    <div class="dbody"><p class="sidenote" data-t="s3defNote"></p></div>
+  </details>
 </section>
 
 <section class="step" id="st4" hidden>
@@ -926,6 +972,28 @@ function addPeriodRow(v){
   applyStatic(row);
 }
 
+// 金額入力：入力しながら3桁区切りを入れる。1億円の桁では0を1つ数え違えるだけで致命的。
+// カーソルは「左から数字が何個目か」で復元する。位置で戻すとカンマの増減でずれる。
+function bindMoney(el,set,after){
+  el.addEventListener('input',e=>{
+    const t=e.target, before=t.value, pos=t.selectionStart||0;
+    const nth=before.slice(0,pos).replace(/\D/g,'').length;   // カーソル左にある数字の個数
+    const neg=/^\s*-/.test(before);
+    const digits=before.replace(/\D/g,'');
+    const val=digits===''?null:(neg?-1:1)*Number(digits);
+    set(val);
+    const out=val===null?(neg?'-':''):money(val);
+    if(out!==before){
+      t.value=out;
+      let seen=0,i=0;
+      if(nth>0){ for(;i<out.length;i++){ if(/\d/.test(out[i])){ seen++; if(seen===nth){ i++; break; } } } }
+      else i=neg?1:0;
+      try{ t.setSelectionRange(i,i); }catch(err){}
+    }
+    if(after)after();
+  });
+}
+
 /* ---- 文言の流し込み（テキストのみ。入力要素は作り直さない） ---- */
 function applyStatic(root){
   (root||document).querySelectorAll('[data-t]').forEach(el=>{ el.innerHTML=nb(esc(T(el.dataset.t))); });
@@ -951,12 +1019,7 @@ function restoreInputs(){
   dep.addEventListener('input',e=>{S.departure=D.parse(e.target.value);renderOutput();});
   const amt=document.getElementById('in-amt');
   if(S.totalValue!==null)amt.value=money(S.totalValue);
-  amt.addEventListener('input',e=>{
-    const raw=e.target.value.replace(/[^\d-]/g,'');
-    S.totalValue=raw===''?null:Number(raw);
-    renderOutput();                        // e.target には触らない＝カーソルが飛ばない
-  });
-  amt.addEventListener('blur',e=>{ if(S.totalValue!==null)e.target.value=money(S.totalValue); });
+  bindMoney(amt,v=>{S.totalValue=v;},renderOutput);
   const def=document.getElementById('in-def');
   if(def){ def.checked=!!S.wantsDeferral;
     def.addEventListener('change',e=>{S.wantsDeferral=e.target.checked;renderOutput();}); }
@@ -1011,6 +1074,7 @@ function resultHTML(r){
   }
 
   h+=`<p class="vsub">${nb(esc(T('v_'+r.verdict+'Sub')))}</p>`;
+  h+=printSummary();   // 画面には出さない。紙にしたとき入力が消えていると相談に使えない。
 
   for(const rs of (r.reasons||[])){
     let msg;
@@ -1046,6 +1110,7 @@ function resultHTML(r){
     h+=`</div>`;
     h+=`<div class="legalterm">${nb(esc(T('termHead')))}<br>${nb(esc(T('term_subject')))}</div>`;
     h+=`<div class="legalterm"><strong>${nb(esc(T('statuteHead')))}</strong><br>${nb(esc(T('statuteBody')))}</div>`;
+    h+=`<div class="legalterm"><strong>${nb(esc(T('fxCreditHead')))}</strong><br>${nb(esc(T('fxCreditBody')))}</div>`;
     h+=`<details><summary><span>${esc(T('estSum'))}</span><span class="whofor">${esc(T('estWho'))}</span></summary>
       <div class="dbody"><div class="field">
       <label class="q" style="font-size:.87rem" for="in-gain">${esc(T('estQ'))}</label>
@@ -1062,6 +1127,25 @@ function resultHTML(r){
       <div class="dbody"><p class="sidenote">${nb(esc(T('giftBody')))}</p></div></details>`;
   }
   return h;
+}
+
+// 印刷専用の入力サマリー。税理士に渡す紙に「何を入れたか」が無いと役に立たない。
+function printSummary(){
+  const row=(k,v)=>(v===null||v===undefined||v==='')?'':
+    `<tr><th>${nb(esc(T(k)))}</th><td>${nb(esc(v))}</td></tr>`;
+  const yn=b=>b?T('ps_yes'):T('ps_no');
+  const val=D.isValid(S.departure)&&S.hasTaxAgent!==null?valuationDate(S.departure,S.hasTaxAgent):null;
+  let rows='';
+  rows+=row('s2date',D.isValid(S.departure)?dateStr(S.departure):null);
+  rows+=row('ps_stay',S.alwaysInJapan===null?null:S.alwaysInJapan?T('s3yes')
+    :S.periods.filter(p=>p.from&&p.to).map(p=>`${dateStr(p.from)} - ${dateStr(p.to)}`).join('  /  '));
+  rows+=row('ps_agent',S.hasTaxAgent===null?null:yn(S.hasTaxAgent));
+  if(S.hasTaxAgent)rows+=row('ps_deferral',yn(S.wantsDeferral));
+  if(val&&val.ok)rows+=row('ps_basis',dateStr(val.date));
+  rows+=row('ps_total',S.totalValue===null?null:money(S.totalValue));
+  if(S.gain!==null)rows+=row('ps_gain',money(S.gain));
+  rows+=row('ps_on',dateStr(TODAY));
+  return rows?`<div class="printsum"><h3>${nb(esc(T('ps_head')))}</h3><table>${rows}</table></div>`:'';
 }
 
 function timelineHTML(items){
@@ -1081,12 +1165,12 @@ function timelineHTML(items){
 
 function bindResult(){
   const g=document.getElementById('in-gain'); if(!g)return;
-  g.addEventListener('input',e=>{
-    const raw=e.target.value.replace(/[^\d-]/g,''); S.gain=raw===''?null:Number(raw);
+  bindMoney(g,v=>{S.gain=v;},()=>{        // 影響範囲だけ差し替える＝カーソルが飛ばない
     const o=document.getElementById('est-out');
-    o.textContent=(S.gain!==null&&S.gain>0)?fill('estResult',{n:money(S.gain*RULES.taxRate.total)}):'';
-  });                                      // 出力だけ差し替える＝カーソルが飛ばない
-  g.addEventListener('blur',e=>{ if(S.gain!==null)e.target.value=money(S.gain); });
+    if(o)o.textContent=(S.gain!==null&&S.gain>0)?fill('estResult',{n:money(S.gain*RULES.taxRate.total)}):'';
+    const ps=document.querySelector('.printsum');   // 紙にも含み益を載せる
+    if(ps)ps.outerHTML=printSummary();
+  });
 }
 
 /* ---- 出典・免責・フッタ ---- */
@@ -1100,6 +1184,7 @@ function renderStatic(){
     {law:RULES.meta.lawAsOf,faq:RULES.meta.faqRevision,rev:RULES.meta.reviewedOn});
   document.getElementById('t-disc-h').textContent=T('discHead');
   document.getElementById('t-disc').innerHTML=nb(esc(T('disc')));
+  document.getElementById('t-sharenote').innerHTML=nb(esc(T('shareNote')));
   document.getElementById('t-copy').textContent=T('copyright');   // 直書きしない
   document.getElementById('btn-print').textContent=T('btnPrint');
   document.getElementById('btn-share').textContent=T('btnShare');
