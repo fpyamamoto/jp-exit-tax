@@ -1,0 +1,81 @@
+Copyright (c) 2026 fpyamamoto. All Rights Reserved.
+
+================================================================
+ENGLISH
+================================================================
+
+ALL RIGHTS RESERVED.
+
+This repository is published for the sole purpose of allowing others to
+read and evaluate the author's work. Publication does not grant a licence
+of any kind.
+
+You MAY:
+  - View and read the source code in this repository.
+  - Use the deployed web application at its published URL as an end user.
+  - Link to this repository or to the deployed application.
+  - Quote short excerpts for the purpose of commentary or review, with
+    attribution.
+
+You MAY NOT, without the prior written permission of the copyright holder:
+  - Copy, reproduce, or redistribute the source code, in whole or in part.
+  - Modify, adapt, translate, or create derivative works.
+  - Host, deploy, or otherwise make the application available, whether
+    modified or unmodified.
+  - Use the source code, in whole or in part, in any other project,
+    whether commercial or non-commercial.
+  - Use the source code as training data for machine learning models.
+
+No trademark, patent, or other right is granted by this notice.
+
+DISCLAIMER OF WARRANTY AND LIABILITY
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+This application is not tax advice. The author is not a licensed tax
+accountant (zeirishi). Nothing produced by this application constitutes
+professional advice, and no professional relationship is created by its use.
+Consult a licensed tax accountant or the National Tax Agency before acting.
+
+================================================================
+日本語
+================================================================
+
+無断複製・再配布を禁じます。
+
+本リポジトリは、作成者の制作物を第三者が閲覧・評価できるようにすることのみを
+目的として公開しています。公開は、いかなる利用許諾も意味しません。
+
+次の行為は認められます。
+  - 本リポジトリのソースコードを閲覧・通読すること。
+  - 公開URLのWebアプリケーションをエンドユーザーとして利用すること。
+  - 本リポジトリまたは公開アプリケーションへリンクを張ること。
+  - 論評・批評の目的で、出所を明示したうえで短い引用を行うこと。
+
+次の行為は、著作権者の事前の書面による許諾なく行うことを禁じます。
+  - ソースコードの全部または一部の複製・再配布。
+  - 改変・翻案・翻訳、および二次的著作物の作成。
+  - 改変の有無を問わず、本アプリケーションをホスティング・デプロイし、
+    または他の方法で利用可能な状態に置くこと。
+  - ソースコードの全部または一部を、営利・非営利を問わず他のプロジェクトに
+    使用すること。
+  - ソースコードを機械学習モデルの学習データとして使用すること。
+
+本表示により、商標権・特許権その他の権利が許諾されるものではありません。
+
+無保証および免責
+
+本ソフトウェアは現状有姿で提供され、明示黙示を問わず、商品性、特定目的への
+適合性、および権利非侵害を含むいかなる保証も伴いません。作成者は、契約、
+不法行為その他を問わず、本ソフトウェアまたはその使用もしくはその他の取扱いに
+起因または関連して生じた一切の請求、損害その他の責任を負いません。
+
+本アプリケーションは税務上の助言ではありません。作成者は税理士ではありません。
+本アプリケーションが出力する内容は専門的助言を構成せず、その利用によって
+専門家としての関係が生じることもありません。実際の判断にあたっては、必ず
+税理士または国税庁にご確認ください。
