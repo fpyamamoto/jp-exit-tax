@@ -47,6 +47,11 @@ eq("#2 99,999,999 -> notSubject", E.evaluate(base({departure:P("2027-07-14"), ha
   const r2 = E.residencyCheck(P("2030-01-01"), false, [{from:P("2024-12-30"), to:P("2029-12-31")}]);
   eq("#3b one more day -> met", r2.met, true);
 }
+// practitioner's published example quoted in the README: counted from 2014-04-02 to 2017-06-30 -> 3 years 2 months 29 days
+{
+  const r = E.residencyCheck(P("2020-01-01"), false, [{from:P("2014-04-01"), to:P("2017-06-30")}]);   // entry 04-01 -> counted from 04-02
+  eq("README example: years", r.span.y, 3); eq("README example: months", r.span.m, 2); eq("README example: days", r.span.d, 29);
+}
 // #4 before 2015-07-01
 eq("#4 2014-06-30 -> notSubject", E.evaluate(base({departure:P("2014-06-30"), hasTaxAgent:true, totalValue:200000000}), TODAY).verdict, "notSubject");
 eq("#4b 2015-07-01 -> subject", E.evaluate(base({departure:P("2015-07-01"), hasTaxAgent:true, totalValue:200000000}), TODAY).verdict, "subject");
@@ -174,7 +179,17 @@ check("source: NTA No.2260 listed", E.RULES.sources.primary.some(s => /2260\.htm
   const nums = (readme.match(/日英で(\d+)キー|(\d+)-key bilingual/g) || []);
   check("README: no other key counts", nums.length === 2, nums.join(","));
   // plan C: only verifiable test counts in public text
-  for(const bad of ["461", "計461件", "80件", "121件", "203件", "57件", "522件", "260件", "60,000", "260 tests", "7回間違"]){
+  // app-linked numbers in the README
+  const kinds = E.RULES.timeline.transfer.length;
+  check("README: kinds of deadlines (" + kinds + ")", (readme.match(new RegExp(kinds + "種類の期限", "g")) || []).length === 2 && !/10種類の期限/.test(readme));
+  {
+    const dep = P("2029-06-01");
+    const rowsPlain = E.buildTimeline(dep, {hasTaxAgent:true, wantsDeferral:false}, TODAY).length + 1;   // + "today"
+    const rowsDef   = E.buildTimeline(dep, {hasTaxAgent:true, wantsDeferral:true},  TODAY).length + 1;
+    check("README: timeline rows " + rowsPlain + " -> " + rowsDef, readme.includes("タイムラインの行数が" + rowsPlain + "行から" + rowsDef + "行に変わります"));
+  }
+  for(const bad of ["461", "計461件", "80件", "121件", "203件", "57件", "522件", "260件", "60,000", "260 tests", "7回間違",
+                    "559,989", "0.52%", "±16日", "±12日", "1814日", "6日について", "tests\\run.js"]){
     check("README: no unverifiable count '" + bad + "'", !readme.includes(bad));
   }
   check("README: main door (en)", /\*\*Registration is the main door, and it closes at the moment of departure\.\*\*/.test(readme));
@@ -209,7 +224,7 @@ eq("law as of", E.RULES.meta.lawAsOf, "2026-11-24");
 {
   const readme = fs.readFileSync(path.join(__dirname, "..", "README.md"), "utf8").replace(/\r\n/g, "\n");
   const total = passed + failed + 1;   // including this check
-  const ja = (readme.match(/`tests\\run\.js` に試験が(\d+)件あります/) || [])[1];
+  const ja = (readme.match(/`tests\/run\.js` に試験が(\d+)件あります/) || [])[1];
   const en = (readme.match(/`tests\/run\.js` holds (\d+) checks/) || [])[1];
   check("README states the real number of checks (ja " + ja + ", en " + en + ", actual " + total + ")",
         Number(ja) === total && Number(en) === total);

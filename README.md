@@ -70,16 +70,11 @@
 
 **これは日数の合計ではありません。** 年・月・日を別々に積んでから、余った日数を30日＝1月で繰り上げます。滞在が分割されるほど、この丸めが効きます。
 
-どれだけずれるのか、ランダム559,989ケース（滞在1〜14回・10年窓内）で突き合わせました。
+どれだけずれるのか、開発中に、滞在の回数や長さを変えたランダムな入力をたくさん作って突き合わせました（この突き合わせはリポジトリには入っていません）。
 
-| 方式 | 結論が食い違う | 5年線からの最大距離 |
-|---|---|---|
-| 日数の単純合計（両端算入） | 0.52% | ±16日 |
-| 起算日を通達に合わせた版 | 0.23% | ±12日 |
+**起算日を直しても消えません。** 日数合計方式は、どう直しても5年線の近くで通達方式と結論が割れました。滞在が細かく分かれている人ほど、通達方式では「5年超＝該当」、日数合計では「5年に足りない＝対象外」と、正反対になる場合がありました。
 
-**起算日を直しても消えません。** 日数合計方式は、どう修正しても5年線±12日で通達と割れます。最悪ケース（滞在10回）では、通達方式が「5年0ヶ月2日＝該当」、日数合計が「1814日＝5年に12日足りない＝対象外」と正反対になりました。
-
-通達方式に置き換えました。実装が正しいことは、実務家が公開している計算例（2014.4.2起算〜2017.6.30 → 3年2ヶ月29日）を再現できることで確かめています。10年窓も、所基通2-4の2に倣って「出国日の10年前の同日から出国日の前日まで」としました。
+通達方式に置き換えました。実装が正しいことは、実務家が公開している計算例（2014.4.2起算〜2017.6.30 → 3年2ヶ月29日）を再現できることで確かめています（`tests/run.js` でも確かめています）。10年窓も、所基通2-4の2に倣って「出国日の10年前の同日から出国日の前日まで」としました。
 
 **そして、90日のマージンは撤廃しました。**
 
@@ -93,11 +88,11 @@
 
 **弱点も正直に書いておきます。** 所基通2-4の3は所法2条1項4号のものであって、60条の2のものではありません。**類推適用です。** 60条の2専用の通達は、探した限り公表されていません。他に依るべきものが無く、実務家も同じ数え方をしているので採りましたが、この点は画面にも明記しています。
 
-同じ実装をindex.htmlとengine.jsの2箇所に持つ以上、必ず食い違います（実際、一度ドリフトしました）。開発中は、ランダムな入力で両者の出力が完全一致することを確かめていました。
+開発中は、同じ実装を index.html と engine.js（リポジトリには入っていません）の2箇所に持っていたので、必ず食い違います（実際、一度ドリフトしました）。そこで、ランダムな入力で両者の出力が完全一致することを確かめていました。
 
 ### 期限には「目安」と「確定」の2種類がある
 
-逆算タイムラインには10種類の期限が乗りますが、**確からしさが同じではありません。**
+逆算タイムラインには11種類の期限が乗りますが、**確からしさが同じではありません。**
 
 「3か月前の日」はFAQに計算例があるので確定です。「納税管理人の届出期限＝出国の時まで」も確定。「翌年3月15日（土日なら翌月曜）」も確定です。
 
@@ -125,7 +120,7 @@
 
 **国籍は、設問ごと削除しました。** 調べ直すと、この設問は**判定に一切使っていませんでした**。在留資格で除外される期間は、利用者自身が期間入力から外す運用にしてあるからです。つまり注記を出すためだけのスイッチで、そのスイッチは折りたたみ自体がすでに担っていました。状態変数もURL共有のペイロードからも消しました。
 
-**納税猶予は、チェックボックスにしました。** こちらは本物の設問です。チェックの有無でタイムラインの行数が4行から9行に変わります。ただし「はい／いいえ」の二択を折りたたみの中に隠す必要はありません。任意の追加項目は、説明ごと常に見せて、チェックボックス1つで足ります。既定は未チェック（使わない）です。
+**納税猶予は、チェックボックスにしました。** こちらは本物の設問です。チェックの有無でタイムラインの行数が4行から10行に変わります（「今日」の行を含みます）。ただし「はい／いいえ」の二択を折りたたみの中に隠す必要はありません。任意の追加項目は、説明ごと常に見せて、チェックボックス1つで足ります。既定は未チェック（使わない）です。
 
 原則そのものをテストにしました。**どの `<details>` も、中に選択肢の設問（`[data-grp]`）を持たないこと。** 今後どれだけ折りたたみを足しても、同じ形の事故は起きません。
 
@@ -266,7 +261,7 @@ STEP 3の補助文にこう書いてありました。「途中で数年だけ�
 
 **「わからない」という選択肢を置かない。** 最初のフロー案では時価合計を「1億円未満／1億円以上／わからない」の3択にしていました。3択にすると、しきい値からの距離が出せません。また「わからない」は逃げ道になります。証券口座の評価額合計を見れば済む話なので、選択肢からは外し、代わりに確認先を入力欄の脇に常時表示しました。
 
-**「出国予定時期」を3択にしない。** 「3ヶ月以内／3ヶ月〜1年／1年以上先」では逆算ができません。日付を1つ入れてもらうことで、10種類の期限がすべて出ます。入力は1つ増えるどころか、選択肢を選ぶより速いくらいです。
+**「出国予定時期」を3択にしない。** 「3ヶ月以内／3ヶ月〜1年／1年以上先」では逆算ができません。日付を1つ入れてもらうことで、当てはまる期限がすべて出ます。入力は1つ増えるどころか、選択肢を選ぶより速いくらいです。
 
 **相続を判定しない。** 相続でも同じ課税が起きますが、準確定申告の期限は「相続があったことを知った日の翌日から4か月を経過した日の前日」で、資産を取得しない相続人も申告が必要で、海外在住の相続人が複数なら納税管理人の届出は全員の連署で、限定承認ならこの制度は適用されず別の規定でみなし譲渡課税になり、遺産分割が未確定なら法定相続分で申告してあとから修正申告か更正の請求をします。**判定に耐える設問に分解できる分量ではありません。** 案内にとどめ、税理士への導線を置きました。贈与も同様です。
 
@@ -288,7 +283,7 @@ STEP 3の補助文にこう書いてありました。「途中で数年だけ�
 
 単一のHTMLファイルです。フレームワークもビルドツールも使っていません。外部リソースの読み込みもゼロで、CDNもWebフォントも使っていないので、`file://` で開いてもiframeの中でも動きます。localStorageとsessionStorageも使っていません。
 
-制度データはすべて `RULES` オブジェクトに集約し、ロジックから分離しています。しきい値、居住期間の要件、基準日の計算規則、対象資産の分類、10種類の期限規則、税率、出典URL。改正があってもここだけを差し替えれば済みます。
+制度データはすべて `RULES` オブジェクトに集約し、ロジックから分離しています。しきい値、居住期間の要件、基準日の計算規則、対象資産の分類、11種類の期限規則、税率、出典URL。改正があってもここだけを差し替えれば済みます。
 
 表示テキストは `I18N` 辞書に完全集約しています。日英で185キー、著作権表記も含めて直書きはありません。起動時に自走するチェックがあり、日英のキー数の不一致と、英語辞書に日本語が残っていないかをコンソールに出します。このチェックは何があっても本体を止めないようにしてあります（下記）。
 
@@ -300,9 +295,9 @@ STEP 3の補助文にこう書いてありました。「途中で数年だけ�
 
 数値とロジックは、実際に動かして確かめています。
 
-- リポジトリの `tests\run.js` に試験が143件あります（誰でも `node tests/run.js` で動かせます）。**出荷するindex.htmlからコードを取り出して実行**します。テスト用に書いたコードが通っても、出荷物が通らなければ意味がないためです。
+- リポジトリの `tests/run.js` に試験が155件あります（誰でも `node tests/run.js` で動かせます）。**出荷するindex.htmlからコードを取り出して実行**します。テスト用に書いたコードが通っても、出荷物が通らなければ意味がないためです。
 - 境界値は1億円ちょうど、5年ちょうど、12月31日出国、3月15日が土日になる年（2026年から2040年まで総当り）を含みます。
-- 開発中には、このほかに jsdom で実際に画面を操作するテストや、機能の欠けた環境を再現するテスト（後述）も動かしました。これらはリポジトリには入っていません。
+- 開発中には、このほかに jsdom で実際に画面を操作するテスト（本文で「テストで確かめている」と書いた画面の表示に関わるものは、こちらです）や、機能の欠けた環境を再現するテスト（後述）も動かしました。これらはリポジトリには入っていません。
 
 この過程で、**テストの側が何度も間違っていました。** 符号を逆にしていたもの、自分のCSSコメントに正規表現が反応していたもの、「経過済みの期限があるはずだ」と決めつけていたもの、`navigator.language` のスタブを忘れて英語版を掴んでいたもの、出国予定日を取り違えて境界の日付を間違えたもの、経過日数を実日付に依存した固定値で書いて日替わりで壊れたもの。3つ目は、納税管理人を届け出て出国96日前なら全期限が未来なので、経過済みの行が存在しないのが正しい挙動でした。実行しなければ、どれも気づきませんでした。
 
@@ -316,13 +311,13 @@ I18N辞書の日英キー数が一致しているか、英語辞書に日本語�
 
 開発用の補助機能が本番の描画を止めてよい理由はありません。自走チェック全体を try/catch で囲みました。
 
-ここで一度しくじっています。フォールバック先を `console.warn` にしたところ、**成功メッセージが警告として黄色く表示されました。** 通っているのに警告を出すのは、ただのノイズです。オオカミ少年になって、本当の警告が埋もれます。**通っているときは黙り、問題があるときだけ喋る**形に直しました。無音であることと、辞書をわざと壊せばちゃんと鳴ることの両方をテストに固定してあります。無音化しすぎて検知力を殺しては本末転倒だからです。
+ここで一度しくじっています。フォールバック先を `console.warn` にしたところ、**成功メッセージが警告として黄色く表示されました。** 通っているのに警告を出すのは、ただのノイズです。オオカミ少年になって、本当の警告が埋もれます。**通っているときは黙り、問題があるときだけ喋る**形に直しました。無音であることと、辞書をわざと壊せばちゃんと鳴ることの両方を、開発中のテストに固定しました。無音化しすぎて検知力を殺しては本末転倒だからです。
 
 ついでに同じ性質の危険を洗いました。`history.replaceState` はサンドボックス内で SecurityError を投げます。`location.origin` は blob: や srcdoc では `"null"` という文字列になります。`navigator.clipboard` は http:// では存在しません。どれも共有ボタンとリセットボタンで踏みます。すべて握りつぶして、機能を落としても本体は生かす形にしました。
 
-そのうえで、**壊れた環境を再現する回帰テストを足しました。** console が無い / console が例外を投げる / history が封じられている / clipboard が無い / clipboard が拒否する / file:// で開く。今回のバグそのものを最初のケースとして固定してあります。同じ穴に二度落ちないためです。
+そのうえで、**壊れた環境を再現する回帰テストを足しました。** console が無い / console が例外を投げる / history が封じられている / clipboard が無い / clipboard が拒否する / file:// で開く。今回のバグそのものを最初のケースとして固定しました。同じ穴に二度落ちないためです。
 
-同じ発想で、**日付も偽装します。** このツールは「今日」を実時刻から取るので、テストが実日付に依存すると日替わりで壊れます。実際、経過日数を「76日」と固定値で書いていたテストが、日付が変わった翌日に落ちました。値を計算して比べる形に直したうえで、JSDOMの `Date` を差し替えて、年末・年始・閏日・3月15日が日曜になる年など、日付まわりが荒れる6日について毎回検査しています。
+同じ発想で、**日付も偽装しました。** このツールは「今日」を実時刻から取るので、テストが実日付に依存すると日替わりで壊れます。実際、経過日数を「76日」と固定値で書いていたテストが、日付が変わった翌日に落ちました。値を計算して比べる形に直したうえで、JSDOMの `Date` を差し替えて、年末・年始・閏日・3月15日が日曜になる年など、日付まわりが荒れる日について検査しました。
 
 ## 免責事項
 
@@ -346,7 +341,7 @@ Three things make it worth a tool rather than an article.
 
 The tool does not fetch exchange rates or share prices. A fetched rate looks authoritative and is probably the wrong one for that taxpayer's valuation date. Instead it shows the distance from the threshold, which is what actually determines how much precision you need: far away, estimate freely; within ten per cent, go and get the real closing price.
 
-Built as one HTML file with no framework, no build step and no external requests. All statutory data lives in a single `RULES` object; all display text lives in a 185-key bilingual dictionary. The repository's `tests/run.js` holds 143 checks that anyone can run with `node tests/run.js`; they extract the code from the shipped file itself. During development the page was also driven through jsdom and booted into deliberately impoverished environments — no `console`, a `console` that throws, `history` blocked by a sandbox, no clipboard, opened from `file://`; those suites are not in the repository. That last kind exists because a startup self-check logged through `console.info` and took the whole page down in a sandboxed preview, after every other test had passed. The tests had simply been running somewhere too comfortable.
+Built as one HTML file with no framework, no build step and no external requests. All statutory data lives in a single `RULES` object; all display text lives in a 185-key bilingual dictionary. The repository's `tests/run.js` holds 155 checks that anyone can run with `node tests/run.js`; they extract the code from the shipped file itself. During development the page was also driven through jsdom and booted into deliberately impoverished environments — no `console`, a `console` that throws, `history` blocked by a sandbox, no clipboard, opened from `file://`; those suites are not in the repository. The second suite was added because a startup self-check logged through `console.info` and took the whole page down in a sandboxed preview, after every existing test had passed. The tests had simply been running somewhere too comfortable.
 
 **This tool is for residents of Japan.** The rule described is Japanese law and has no application elsewhere. The English interface exists so that English speakers can see what the tool does; it omits statutory references and procedural detail deliberately. The author is not a licensed tax accountant and this is not tax advice.
 
