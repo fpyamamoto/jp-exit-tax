@@ -8,7 +8,7 @@
 
 有価証券等を1億円以上持つ日本の居住者が海外へ移住すると、実際には1株も売っていないのに、含み益に所得税がかかります。2015年7月1日に施行された「国外転出時課税制度」です。
 
-この制度の厄介なところは、**知らないまま出国した瞬間に、救済手段がすべて閉じる**ことです。納税猶予も、株価が下がったときの減額措置も、帰国したときの課税取消しも、どれも「国外転出の時までに納税管理人の届出をする」ことが前提になっています。飛行機に乗ってから気づいても、もう間に合いません。しかも更正・決定の期間制限は原則7年で、届出をしていれば5年に短縮されます。つまり届け出ずに出国した人は、7年間さかのぼって課税される側に立ちます。
+この制度の厄介なところは、**知らないまま出国した瞬間に、救済手段のほとんどが閉じる**ことです。納税猶予も、株価が下がったときの減額措置も、どれも「国外転出の時までに納税管理人の届出をする」ことが前提になっています。帰国したときの課税取消しだけは届出がなくても使えます。飛行機に乗ってから気づいても、もう間に合いません。しかも更正・決定の期間制限は原則7年で、届出をしていれば5年に短縮されます。つまり届け出ずに出国した人は、7年間さかのぼって課税される側に立ちます。
 
 制度の認知度は低いままです。日本語の解説記事はいくつもありますが、**自分の数字を入れて確かめられるツールは、調べた限り存在しませんでした。**
 
@@ -26,7 +26,7 @@
 - **出国予定日を1つ入れるだけで、関係するすべての期限を逆算します。** 評価の基準日、納税管理人の届出期限、申告・納税の期限、担保の提供、継続適用届出書、期限延長届出書、納税猶予の納期限、帰国による課税取消しの期限。それぞれ今日から何日後か・何日経過したかを表示します
 - 納税管理人を届け出るかどうかで**評価の基準日が変わる**ことを、判定に織り込みます
 - 1億円のしきい値からの距離を表示し、前後1割に入る場合は概算では足りないことを伝えます
-- 対象資産のチェックリスト（数えるもの9件／数えないもの4件、株式報酬をお持ちの方向けに2件）
+- 対象資産のチェックリスト（数えるもの10件／数えないもの3件、株式報酬をお持ちの方向けに2件）
 - 納税猶予を使う場合の期限は、チェックボックス1つで足し引きできます
 - 相続・贈与でも同じ課税が起きることの案内
 - 含み益の概算から税額の桁を出す簡易計算（任意）
@@ -343,13 +343,13 @@ Three things make it worth a tool rather than an article.
 
 **The valuation date is not fixed until you decide something most people have never heard of.** If you register a tax agent with the tax office before leaving, your securities are valued at the date of departure and you file by 15 March of the following year. If you do not, they are valued exactly three months before your planned departure, and you must file before you board. Same person, same portfolio, two different valuation dates — and with a volatile position, two different answers to the 100 million yen question. This forces the order of the questions: the date and the tax agent must come before the money.
 
-**Registration is the only door, and it closes at the moment of departure.** Deferral, the reduction when prices fall, and the cancellation if you come home within five years all require the registration to have been filed before you leave. Miss it and every remedy is gone at once. The assessment period is seven years by default, five if you registered. So the timeline in this tool colours exactly one line red, and it is not the three-month mark that everyone assumes.
+**Registration is the only door, and it closes at the moment of departure.** Deferral and the reduction when prices fall both require the registration to have been filed before you leave; only the cancellation on returning within five years survives without it. The assessment period is seven years by default, five if you registered. So the timeline in this tool colours exactly one line red, and it is not the three-month mark that everyone assumes.
 
 **The calendar has a hole the tax authority has not filled.** "Exactly three months before" means the anniversary day — the NTA's FAQ works the example: leave on 14 July, value on 14 April. But five days a year have no such anniversary: 29, 30 and 31 May, 31 July, and 31 December. Civil Code reasoning suggests the last day of the month; the NTA does not say. Rounding silently would produce a number that looks right and is not, so the tool refuses to decide, explains why, and points out that registering a tax agent makes the problem vanish.
 
 The tool does not fetch exchange rates or share prices. A fetched rate looks authoritative and is probably the wrong one for that taxpayer's valuation date. Instead it shows the distance from the threshold, which is what actually determines how much precision you need: far away, estimate freely; within ten per cent, go and get the real closing price.
 
-Built as one HTML file with no framework, no build step and no external requests. All statutory data lives in a single `RULES` object; all display text lives in a 180-key bilingual dictionary. 461 tests run against the shipped file itself, including a jsdom pass that drives the actual interface and a suite that boots the page into deliberately impoverished environments — no `console`, a `console` that throws, `history` blocked by a sandbox, no clipboard, opened from `file://`. That last suite exists because a startup self-check logged through `console.info` and took the whole page down in a sandboxed preview, after 260 tests had passed. The tests had simply been running somewhere too comfortable.
+Built as one HTML file with no framework, no build step and no external requests. All statutory data lives in a single `RULES` object; all display text lives in a 185-key bilingual dictionary. 461 tests run against the shipped file itself, including a jsdom pass that drives the actual interface and a suite that boots the page into deliberately impoverished environments — no `console`, a `console` that throws, `history` blocked by a sandbox, no clipboard, opened from `file://`. That last suite exists because a startup self-check logged through `console.info` and took the whole page down in a sandboxed preview, after 260 tests had passed. The tests had simply been running somewhere too comfortable.
 
 **This tool is for residents of Japan.** The rule described is Japanese law and has no application elsewhere. The English interface exists so that English speakers can see what the tool does; it omits statutory references and procedural detail deliberately. The author is not a licensed tax accountant and this is not tax advice.
 

@@ -104,7 +104,10 @@ check("#14 ja label says both qualified and non-qualified", /税制適格・非�
 check("#14 ja note says both qualified and non-qualified", /税制適格・非適格のどちらも/.test(E.I18N.ja.s5rsNote));
 check("#14 en label says qualified or not", /tax-qualified or not/.test(E.I18N.en.a_qualifiedSO));
 check("#14 en note says both", /both tax-qualified and non-qualified/.test(E.I18N.en.s5rsNote));
-check("#13 ja label", /組合財産である有価証券/.test(E.I18N.ja.a_niniKumiai));
+check("#13 ja label names funds and LLPs (所基通36・37共-19)", /投資事業有限責任組合（ファンド）・LLP や海外の同様の組合を通して持つ有価証券/.test(E.I18N.ja.a_niniKumiai));
+check("#13 en label names funds and LLPs", /investment limited partnership \(fund\), an LLP or a similar foreign partnership/.test(E.I18N.en.a_niniKumiai));
+check("SO note: work outside Japan comes first (ja)", /海外で働いていた期間の分がある場合や、海外の親会社から/.test(E.I18N.ja.s5rsNote));
+check("SO note: work outside Japan comes first (en)", /relates to work done outside Japan, or they come from an overseas parent/.test(E.I18N.en.s5rsNote));
 
 /* ---------- estimate and the additional tax note (#15-#18) ---------- */
 eq("#15 1億円 -> 15,315,000", Math.round(100000000 * E.RULES.taxRate.total), 15315000);
@@ -133,11 +136,40 @@ check("UI updates the surtax note on input", /const st=document\.getElementById\
 
 /* ---------- wording ---------- */
 check("tourist tax 3,000 yen (ja)", /出国1回3,000円/.test(E.I18N.ja.notthis) && !/1,000円/.test(E.I18N.ja.notthis));
-check("tourist tax 3,000 yen (en)", /3,000 yen/.test(E.I18N.en.notthis) && !/1,000 yen/.test(E.I18N.en.notthis));
-check("crypto: 2028 (ja)", /2028年から予定の分離課税/.test(E.I18N.ja.a_cryptoNote));
-check("crypto: 2028 (en)", /planned from 2028/.test(E.I18N.en.a_cryptoNote));
-check("revocation: amended return (ja)", /更正の請求または修正申告/.test(E.I18N.ja.tl_revocationLimit));
-check("continuation: second year (ja)", /出国の翌々年から毎年/.test(E.I18N.ja.tl_continuationNotice));
+check("tourist tax 3,000 yen (en)", /^This is not the International Tourist Tax added to airline tickets \(3,000 yen per departure from 1 July 2026\)\./.test(E.I18N.en.notthis));
+check("crypto: 2028 (ja)", E.I18N.ja.a_cryptoNote === "2026年3月に成立し、2028年から予定されている分離課税のあとも、対象外のままです");
+check("crypto: 2028 (en)", E.I18N.en.a_cryptoNote === "Not covered, and the move to separate taxation (enacted March 2026, expected from 2028) does not change that");
+check("revocation: amended return (ja)", /更正の請求または修正申告/.test(E.I18N.ja.tl_revocationLimit) && /更正の請求または修正申告/.test(E.I18N.ja.tl_revocationLimitExt));
+check("revocation: plain English for kosei no seikyu",
+      /a request to correct the assessment \(kosei no seikyu\) or an amended return/.test(E.I18N.en.tl_revocationLimit) &&
+      /a request to correct the assessment \(kosei no seikyu\) or an amended return/.test(E.I18N.en.tl_revocationLimitExt));
+check("continuation: first deadline, no repeated 'every year' (ja)",
+      E.I18N.ja.tl_continuationNotice === "継続適用届出書の最初の提出期限（出国の翌々年。猶予が終わるまで続きます）");
+check("continuation: no 'every year' in the label (en)", !/every year/i.test(E.I18N.en.tl_continuationNotice));
+check("source: NTA No.2260 listed", E.RULES.sources.primary.some(s => /2260\.htm$/.test(s.url)) && "s_ntaRate" in E.I18N.ja && "s_ntaRate" in E.I18N.en);
+// readable big amounts in the surtax note
+{
+  const m = html.match(/function bigYen\(n\)\{[\s\S]*?\n\}/);
+  check("bigYen found", !!m);
+  if(m){
+    const fja = vm.runInNewContext("var LANG='ja';" + m[0] + ";bigYen", {});
+    const fen = vm.runInNewContext("var LANG='en';" + m[0] + ";bigYen", {});
+    eq("bigYen ja 330,000,000", fja(330000000), "3億3,000万");
+    eq("bigYen ja 990,000,000", fja(990000000), "9億9,000万");
+    eq("bigYen en 330,000,000", fen(330000000), "330 million");
+    eq("bigYen en 990,000,000", fen(990000000), "990 million");
+    check("surtax note uses bigYen", /fill\('estSurtax',\{t:bigYen\(n\.threshold\)\}\)/.test(html));
+  }
+}
+// README
+{
+  const readme = fs.readFileSync(path.join(__dirname, "..", "README.md"), "utf8").replace(/\r\n/g, "\n");
+  check("README: cancellation on return survives without registration (ja)", /帰国したときの課税取消しだけは届出がなくても使えます/.test(readme));
+  check("README: no 'every remedy is gone'", !/every remedy is gone/.test(readme));
+  check("README: only the cancellation survives (en)", /only the cancellation on returning within five years survives without it/.test(readme));
+  check("README: asset counts", readme.includes("数えるもの" + E.RULES.assets.included.length + "件／数えないもの" + E.RULES.assets.excludedCommon.length + "件"));
+  check("README: dictionary key count", readme.includes(Object.keys(E.I18N.ja).length + "-key bilingual dictionary"));
+}
 eq("law as of", E.RULES.meta.lawAsOf, "2026-11-24");
 
 /* ---------- dictionaries ---------- */

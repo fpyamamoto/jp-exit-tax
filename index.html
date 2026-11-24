@@ -331,6 +331,7 @@ const RULES = {
       {key:'ntaOutline',url:'https://www.nta.go.jp/taxes/shiraberu/shinkoku/kokugai/pdf/03.pdf'},
       {key:'ntaFaq',    url:'https://www.nta.go.jp/taxes/shiraberu/shinkoku/kokugai/pdf/02.pdf'},
       {key:'ntaAnswer', url:'https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1478.htm'},
+      {key:'ntaRate',   url:'https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/2260.htm'},
       {key:'ntaForms',  url:'https://www.nta.go.jp/taxes/shiraberu/shinkoku/kokugai/yoshiki/index.htm'}
     ],
     reference:[
@@ -392,7 +393,7 @@ ja:{
  s5fxNote:'基準日のTTM（対顧客直物電信売相場と買相場の仲値）で円に直します。TTBでもTTSでもありません（所得税基本通達60の2-8）。レートは取引のある金融機関が公表しているものを使ってください。このツールはレートを自動では取りません。取ってしまうと、正しそうに見える間違った数字になるからです。合計が1億円から大きく離れているなら、おおまかな換算で足ります。1億円の前後1割に入るなら、正確なTTMで計算してください。',
  s5rsSum:'勤務先から株式やストックオプションを受け取っている方へ',
  s5rsWho:'合計に入れなくてよいものがあります。自社株を持っていない方は開く必要はありません。',
- s5rsNote:'次の2つは合計に入れません。①譲渡制限がまだ解除されていない特定譲渡制限付株式（権利が確定していないRSU）②勤務先などから受け取ったストックオプション（税制適格・非適格のどちらも）の権利を表す有価証券。ただし法令では、どちらも「国内源泉所得を生ずべきもの」に限る、とされています。その所得の源泉が日本かどうかで扱いが分かれるため、海外の親会社から受け取っている場合など、源泉がはっきりしないときは、ここだけは税理士にご確認ください。すでに権利が確定して自由に売れる状態の株式は、ふつうに合計へ入れてください。',
+ s5rsNote:'次の2つは合計に入れません。①譲渡制限がまだ解除されていない特定譲渡制限付株式（権利が確定していないRSU）②勤務先などから受け取ったストックオプション（税制適格・非適格のどちらも）の権利を表す有価証券。ただし法令では、どちらも「国内源泉所得を生ずべきもの」に限る、とされています。その所得の源泉が日本かどうかで扱いが分かれるため、海外で働いていた期間の分がある場合や、海外の親会社から受け取っている場合など、源泉がはっきりしないときは、ここだけは税理士にご確認ください。すでに権利が確定して自由に売れる状態の株式は、ふつうに合計へ入れてください。',
 
  a_listedStock:'上場株式', a_unlistedStock:'非上場株式（自社株・同族会社の株式など）',
  a_fund:'投資信託', a_bond:'公社債（国債・社債・割引債など）',
@@ -400,9 +401,9 @@ ja:{
  a_tokumeiKumiai:'匿名組合契約の出資持分',
  a_marginTrading:'未決済の信用取引', a_whenIssued:'未決済の発行日取引',
  a_derivative:'未決済のデリバティブ取引（先物・オプション・FXなど）',
- a_crypto:'暗号資産', a_cryptoNote:'2028年から予定の分離課税（2026年3月に成立）のあとも対象外のままです',
+ a_crypto:'暗号資産', a_cryptoNote:'2026年3月に成立し、2028年から予定されている分離課税のあとも、対象外のままです',
  a_cash:'現金・預金', a_realEstate:'不動産',
- a_niniKumiai:'任意組合などの組合財産である有価証券（持分に応じた分）', a_niniNote:'組合を通して持つ有価証券も合計に入れます',
+ a_niniKumiai:'任意組合・投資事業有限責任組合（ファンド）・LLP や海外の同様の組合を通して持つ有価証券（持分に応じた分）', a_niniNote:'組合を通して持つ有価証券も合計に入れます',
  a_unvestedRS:'権利が確定していない譲渡制限付株式（RSU）',
  a_qualifiedSO:'勤務先などから受け取ったストックオプション（税制適格・非適格のどちらも。まだ行使していないもの）',
  a_overseasNote:'海外の証券口座で持っているものも合計に入れます。',
@@ -456,7 +457,7 @@ ja:{
  tl_filingNoAgent:'準確定申告と納税はこの日まで（出国の時まで）',
  tl_filingWithAgent:'確定申告と納税の期限',
  tl_collateral:'担保の提供もこの日まで',
- tl_continuationNotice:'継続適用届出書をこの日までに提出（出国の翌々年から毎年。猶予が終わるまで続きます）',
+ tl_continuationNotice:'継続適用届出書の最初の提出期限（出国の翌々年。猶予が終わるまで続きます）',
  tl_extensionNotice:'猶予を5年延ばすなら、この日までに期限延長届出書',
  tl_revocationLimit:'この日までに帰国して持ち続けていれば、課税を取り消せる（帰国から4か月以内に更正の請求または修正申告）。これだけは納税管理人の届出がなくても使えます',
  tl_revocationLimitExt:'期限延長の届出をした場合は、この日までに帰国して持ち続けていれば、課税を取り消せる（帰国から4か月以内に更正の請求または修正申告）',
@@ -495,6 +496,7 @@ ja:{
  s_ntaOutline:'国税庁「国外転出時課税制度のあらまし」（平成27年5月・PDF）',
  s_ntaFaq:'国税庁「国外転出時課税制度（FAQ）」（令和5年6月最終改訂・PDF）',
  s_ntaAnswer:'国税庁 タックスアンサー No.1478「国外転出をする場合の譲渡所得等の特例」',
+ s_ntaRate:'国税庁 タックスアンサー No.2260「所得税の税率」（防衛特別所得税・極めて高い所得への追加の税）',
  s_ntaForms:'国税庁「国外転出時課税制度関係の各種様式」',
  refHead:'参考',
  s_egov:'e-Gov法令検索「所得税法」（第60条の2ほか）',
@@ -520,7 +522,7 @@ ja:{
 en:{
  title:'Japan Exit Tax Checker',
  tagline:'Japan taxes unrealised gains on securities when a long-term resident emigrates. Enter one date and see whether it applies, and by when you must act.',
- notthis:'This is not the 3,000 yen International Tourist Tax charged per departure (departures from 1 July 2026) and added to airline tickets. This is income tax on unrealised gains on securities.',
+ notthis:'This is not the International Tourist Tax added to airline tickets (3,000 yen per departure from 1 July 2026). This is income tax on unrealised gains on securities.',
  langJa:'JA', langEn:'EN',
 
  s1no:'STEP 1', s1q:'Is your main base of life currently in Japan?',
@@ -565,7 +567,7 @@ en:{
  s5fxNote:'Convert at the TTM (the mid rate between the TTS and TTB, not the TTB or TTS itself) on your valuation date, as published by a financial institution you deal with. This follows NTA circular 60-2-8. This tool does not fetch rates. A fetched rate would look right and be wrong. If your total is far from 100 million yen, a rough conversion is enough. Within ten per cent either side, use the actual TTM.',
  s5rsSum:'For people holding employer shares or stock options',
  s5rsWho:'Some holdings stay out of the total. Skip this if you hold no employer shares.',
- s5rsNote:'Two things stay out of the total: restricted stock whose transfer restriction has not yet been lifted (unvested RSUs), and securities representing stock options received from your employer or similar (both tax-qualified and non-qualified). The statute limits both to what would produce Japan-source income, so the answer turns on where the income arises. If yours come from an overseas parent company, or the source is otherwise unclear, take this one point to a tax accountant. Shares that have vested and are freely sellable go into the total as normal.',
+ s5rsNote:'Two things stay out of the total: restricted stock whose transfer restriction has not yet been lifted (unvested RSUs), and securities representing stock options received from your employer or similar (both tax-qualified and non-qualified). The statute limits both to what would produce Japan-source income, so the answer turns on where the income arises. If part of them relates to work done outside Japan, or they come from an overseas parent company, or the source is otherwise unclear, take this one point to a tax accountant. Shares that have vested and are freely sellable go into the total as normal.',
 
  a_listedStock:'Listed shares', a_unlistedStock:'Unlisted shares (own company, family company)',
  a_fund:'Investment trusts', a_bond:'Bonds (government, corporate, discount bonds)',
@@ -573,9 +575,9 @@ en:{
  a_tokumeiKumiai:'Interests in a silent partnership (tokumei kumiai)',
  a_marginTrading:'Open margin trades', a_whenIssued:'Open when-issued trades',
  a_derivative:'Open derivatives (futures, options, FX)',
- a_crypto:'Crypto assets', a_cryptoNote:'Still outside the scope after the move to separate taxation planned from 2028 (enacted March 2026)',
+ a_crypto:'Crypto assets', a_cryptoNote:'Not covered, and the move to separate taxation (enacted March 2026, expected from 2028) does not change that',
  a_cash:'Cash and deposits', a_realEstate:'Real estate',
- a_niniKumiai:'Securities held as partnership property of a general partnership or similar (your share)', a_niniNote:'Securities held through a partnership also count',
+ a_niniKumiai:'Securities held through a general partnership, an investment limited partnership (fund), an LLP or a similar foreign partnership (your share)', a_niniNote:'Securities held through a partnership also count',
  a_unvestedRS:'Unvested restricted stock (RSU)',
  a_qualifiedSO:'Stock options from your employer or similar (tax-qualified or not, not yet exercised)',
  a_overseasNote:'Holdings in overseas brokerage accounts go into the total too.',
@@ -629,10 +631,10 @@ en:{
  tl_filingNoAgent:'File and pay by this day, before you leave',
  tl_filingWithAgent:'Filing and payment deadline',
  tl_collateral:'Post security by this day too',
- tl_continuationNotice:'File the continued-application notice by this day (every year from the second year after departure, until the deferral ends)',
+ tl_continuationNotice:'First deadline for the continued-application notice (the second year after departure; it continues until the deferral ends)',
  tl_extensionNotice:'To extend deferral by five years, file the extension notice by this day',
- tl_revocationLimit:'Return by this day still holding the assets and the charge can be cancelled (a claim for correction or an amended return within four months of returning). This one alone survives without a tax agent',
- tl_revocationLimitExt:'If you filed for the extension: return by this day still holding the assets and the charge can be cancelled (a claim for correction or an amended return within four months of returning)',
+ tl_revocationLimit:'Return by this day still holding the assets and the charge can be cancelled (a request to correct the assessment (kosei no seikyu) or an amended return within four months of returning). This one alone survives without a tax agent',
+ tl_revocationLimitExt:'If you filed for the extension: return by this day still holding the assets and the charge can be cancelled (a request to correct the assessment (kosei no seikyu) or an amended return within four months of returning)',
  tl_deferralDue:'Deferred tax and interest fall due (five years and four months after departure)',
  tl_deferralDueExt:'Due date if extended (ten years and four months after departure)',
  tl_today:'Today',
@@ -668,6 +670,7 @@ en:{
  s_ntaOutline:'National Tax Agency, Outline of the rule (May 2015, PDF, Japanese)',
  s_ntaFaq:'National Tax Agency, FAQ (last revised June 2023, PDF, Japanese)',
  s_ntaAnswer:'National Tax Agency, Tax Answer No.1478 (Japanese)',
+ s_ntaRate:'National Tax Agency, Tax Answer No.2260: income tax rates, special defence income tax and the additional tax on extremely high incomes (Japanese)',
  s_ntaForms:'National Tax Agency, Forms for this rule (Japanese)',
  refHead:'Further reading',
  s_egov:'e-Gov, Income Tax Act (Article 60-2 and others, Japanese)',
@@ -1158,6 +1161,12 @@ function resultHTML(r){
   return h;
 }
 
+// 大きな額を読みやすく（3億3,000万／330 million）
+function bigYen(n){
+  if(LANG==='ja'){const oku=Math.floor(n/1e8), man=Math.round((n%1e8)/1e4);
+    return (oku?oku+'億':'')+(man?new Intl.NumberFormat('ja-JP').format(man)+'万':'');}
+  return new Intl.NumberFormat('en-US').format(n/1e6)+' million';
+}
 // 概算の文。呼び方は出国の年で切り替える（率は同じ）。
 function estText(){
   if(!(S.gain!==null&&S.gain>0))return '';
@@ -1168,7 +1177,7 @@ function estText(){
 function estSurtaxText(){
   if(!D.isValid(S.departure))return '';
   const n=surtaxNote(S.departure.y,S.gain);
-  return n?fill('estSurtax',{t:money(n.threshold)}):'';
+  return n?fill('estSurtax',{t:bigYen(n.threshold)}):'';
 }
 
 // 印刷専用の入力サマリー。税理士に渡す紙に「何を入れたか」が無いと役に立たない。
