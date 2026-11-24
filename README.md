@@ -15,7 +15,7 @@
 世間の誤解も多く見つかりました。とくに次の3つは、解説記事を読んだ人でも間違えます。
 
 - **NISAは対象外だと思われている。** 逆です。売っても税金がかからない口座ですが、1億円の判定には含めます。国債や割引債のような「譲渡所得が非課税になる有価証券」も同じく含めます。非課税だから除外、ではありません。
-- **暗号資産が対象になったと思われている。** 令和8年度税制改正で暗号資産は申告分離課税に移り、税法上は有価証券に近い整理をされました。改正所得税法は2026年3月31日に成立済みです。しかし国外転出時課税の対象資産には組み込まれていません。現時点でも対象外のままです。
+- **暗号資産が対象になったと思われている。** 暗号資産を申告分離課税に移す改正は2026年3月31日に成立し、2028年から施行の予定です。しかし国外転出時課税の対象資産には組み込まれていません。現時点でも対象外のままです。
 - **「3か月前」が締切だと思われている。** 3か月前の日は締切ではなく、**納税管理人の届出をしない場合の株価の評価日**です。本当の締切は出国日そのものです。
 
 このツールは、②「国外財産調書 提出義務チェッカー」のユーザー層（有価証券を持つ日本居住者）からの自然な導線として作りました。国外財産が5,000万円を超える人と、有価証券が1億円を超える人は、かなり重なります。
@@ -333,7 +333,7 @@ I18N辞書の日英キー数が一致しているか、英語辞書に日本語�
 
 とくに、非上場株式の時価、住所や居所の認定、在留資格による期間の除外は、専門家の判断が必要な領域です。
 
-法令基準日は2026年7月1日、参照した国税庁FAQは令和5年6月最終改訂版です。一次情報との突合日はアプリ内に表示しています。
+法令基準日は2026年11月24日、参照した国税庁FAQは令和5年6月最終改訂版（2026年11月24日時点でも最新）です。一次情報との突合日はアプリ内に表示しています。
 
 ## In English
 
@@ -345,7 +345,7 @@ Three things make it worth a tool rather than an article.
 
 **Registration is the only door, and it closes at the moment of departure.** Deferral, the reduction when prices fall, and the cancellation if you come home within five years all require the registration to have been filed before you leave. Miss it and every remedy is gone at once. The assessment period is seven years by default, five if you registered. So the timeline in this tool colours exactly one line red, and it is not the three-month mark that everyone assumes.
 
-**The calendar has a hole the tax authority has not filled.** "Exactly three months before" means the anniversary day — the NTA's FAQ works the example: leave on 14 July, value on 14 April. But five days a year have no such anniversary: 29, 30 and 31 May, 31 July, and 31 December. Civil Code reasoning suggests the last day of the month; the NTA does not say. Rounding silently would produce a number that looks right and is not, so the tool refuses to decide, explains why, and points out that registering a tax agent makes the problem vanish. The same restraint applies within ninety days of the five-year residence line.
+**The calendar has a hole the tax authority has not filled.** "Exactly three months before" means the anniversary day — the NTA's FAQ works the example: leave on 14 July, value on 14 April. But five days a year have no such anniversary: 29, 30 and 31 May, 31 July, and 31 December. Civil Code reasoning suggests the last day of the month; the NTA does not say. Rounding silently would produce a number that looks right and is not, so the tool refuses to decide, explains why, and points out that registering a tax agent makes the problem vanish.
 
 The tool does not fetch exchange rates or share prices. A fetched rate looks authoritative and is probably the wrong one for that taxpayer's valuation date. Instead it shows the distance from the threshold, which is what actually determines how much precision you need: far away, estimate freely; within ten per cent, go and get the real closing price.
 
