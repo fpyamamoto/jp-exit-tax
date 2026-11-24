@@ -8,7 +8,7 @@
 
 有価証券等を1億円以上持つ日本の居住者が海外へ移住すると、実際には1株も売っていないのに、含み益に所得税がかかります。2015年7月1日に施行された「国外転出時課税制度」です。
 
-この制度の厄介なところは、**知らないまま出国した瞬間に、救済手段のほとんどが閉じる**ことです。納税猶予も、株価が下がったときの減額措置も、どれも「国外転出の時までに納税管理人の届出をする」ことが前提になっています。帰国したときの課税取消しだけは届出がなくても使えます。飛行機に乗ってから気づいても、もう間に合いません。しかも更正・決定の期間制限は原則7年で、届出をしていれば5年に短縮されます。つまり届け出ずに出国した人は、7年間さかのぼって課税される側に立ちます。
+この制度の厄介なところは、**知らないまま出国した瞬間に、救済手段のほとんどが閉じる**ことです。納税猶予も、株価が下がったときの減額措置も、どちらも「国外転出の時までに納税管理人の届出をする」ことが前提です（帰国したときの課税取消しだけは届出がなくても使えます）。飛行機に乗ってから気づいても、もう間に合いません。しかも更正・決定の期間制限は原則7年で、届出をしていれば5年に短縮されます。つまり届け出ずに出国した人は、7年間さかのぼって課税される側に立ちます。
 
 制度の認知度は低いままです。日本語の解説記事はいくつもありますが、**自分の数字を入れて確かめられるツールは、調べた限り存在しませんでした。**
 
@@ -93,7 +93,7 @@
 
 **弱点も正直に書いておきます。** 所基通2-4の3は所法2条1項4号のものであって、60条の2のものではありません。**類推適用です。** 60条の2専用の通達は、探した限り公表されていません。他に依るべきものが無く、実務家も同じ数え方をしているので採りましたが、この点は画面にも明記しています。
 
-同じ実装をindex.htmlとengine.jsの2箇所に持つ以上、必ず食い違います（実際、一度ドリフトしました）。ランダム60,000ケースで両者の出力が完全一致することを、テストで毎回確かめています。
+同じ実装をindex.htmlとengine.jsの2箇所に持つ以上、必ず食い違います（実際、一度ドリフトしました）。開発中は、ランダムな入力で両者の出力が完全一致することを確かめていました。
 
 ### 期限には「目安」と「確定」の2種類がある
 
@@ -290,7 +290,7 @@ STEP 3の補助文にこう書いてありました。「途中で数年だけ�
 
 制度データはすべて `RULES` オブジェクトに集約し、ロジックから分離しています。しきい値、居住期間の要件、基準日の計算規則、対象資産の分類、10種類の期限規則、税率、出典URL。改正があってもここだけを差し替えれば済みます。
 
-表示テキストは `I18N` 辞書に完全集約しています。日英で180キー、著作権表記も含めて直書きはありません。起動時に自走するチェックがあり、日英のキー数の不一致と、英語辞書に日本語が残っていないかをコンソールに出します。このチェックは何があっても本体を止めないようにしてあります（下記）。
+表示テキストは `I18N` 辞書に完全集約しています。日英で185キー、著作権表記も含めて直書きはありません。起動時に自走するチェックがあり、日英のキー数の不一致と、英語辞書に日本語が残っていないかをコンソールに出します。このチェックは何があっても本体を止めないようにしてあります（下記）。
 
 入力条件はハッシュ（`#s=`）にBase64で載せて共有できます。ペイロードにバージョンを持たせ、未知のバージョンでも読める鍵だけを拾うようにしてあります。壊れたハッシュを渡されても落ちません。
 
@@ -300,18 +300,15 @@ STEP 3の補助文にこう書いてありました。「途中で数年だけ�
 
 数値とロジックは、実際に動かして確かめています。
 
-- 判定エンジンの単体テスト 80件
-- **出荷するindex.htmlからコードを取り出して実行**するテスト 121件。テスト用に書いたコードが通っても、出荷物が通らなければ意味がないためです。2026年から2029年の全出国日パターン522件について、検証済みエンジンとの一致も確認しています
-- jsdomで実際に画面を操作するテスト 203件。フォーカスが飛ばないこと、折りたたみが閉じないこと、言語切替で要素数が変わらないこと、警告色が1つだけであること、壊れたハッシュで落ちないこと
-- **機能の欠けた環境を再現するテスト 57件**（後述）
+- リポジトリの `tests\run.js` に試験が143件あります（誰でも `node tests/run.js` で動かせます）。**出荷するindex.htmlからコードを取り出して実行**します。テスト用に書いたコードが通っても、出荷物が通らなければ意味がないためです。
+- 境界値は1億円ちょうど、5年ちょうど、12月31日出国、3月15日が土日になる年（2026年から2040年まで総当り）を含みます。
+- 開発中には、このほかに jsdom で実際に画面を操作するテストや、機能の欠けた環境を再現するテスト（後述）も動かしました。これらはリポジトリには入っていません。
 
-計461件。境界値は1億円ちょうど、5年ちょうど、12月31日出国、閏年の5月29日、3月15日が土日になる年（2026年から2040年まで総当り）を含みます。
-
-この過程で、**テストの側が7回間違っていました。** 符号を逆にしていたもの、自分のCSSコメントに正規表現が反応していたもの、「経過済みの期限があるはずだ」と決めつけていたもの、`navigator.language` のスタブを忘れて英語版を掴んでいたもの、出国予定日を取り違えて境界の日付を間違えたもの、経過日数を実日付に依存した固定値で書いて日替わりで壊れたもの。3つ目は、納税管理人を届け出て出国96日前なら全期限が未来なので、経過済みの行が存在しないのが正しい挙動でした。実行しなければ、どれも気づきませんでした。
+この過程で、**テストの側が何度も間違っていました。** 符号を逆にしていたもの、自分のCSSコメントに正規表現が反応していたもの、「経過済みの期限があるはずだ」と決めつけていたもの、`navigator.language` のスタブを忘れて英語版を掴んでいたもの、出国予定日を取り違えて境界の日付を間違えたもの、経過日数を実日付に依存した固定値で書いて日替わりで壊れたもの。3つ目は、納税管理人を届け出て出国96日前なら全期限が未来なので、経過済みの行が存在しないのが正しい挙動でした。実行しなければ、どれも気づきませんでした。
 
 ### 補助機能が本体を殺した
 
-260件のテストを通したあと、プレビュー環境で真っ白になりました。`console.info is not a function`。
+それまでのテストをすべて通したあと、プレビュー環境で真っ白になりました。`console.info is not a function`。
 
 I18N辞書の日英キー数が一致しているか、英語辞書に日本語が残っていないかを起動時に自走チェックする関数を仕込んでいたのですが、その結果を `console.info` で出していました。サンドボックス内のiframeのように `console` が痩せている環境では、ここで例外が飛んで**本体の描画ごと止まります。**
 
@@ -343,13 +340,13 @@ Three things make it worth a tool rather than an article.
 
 **The valuation date is not fixed until you decide something most people have never heard of.** If you register a tax agent with the tax office before leaving, your securities are valued at the date of departure and you file by 15 March of the following year. If you do not, they are valued exactly three months before your planned departure, and you must file before you board. Same person, same portfolio, two different valuation dates — and with a volatile position, two different answers to the 100 million yen question. This forces the order of the questions: the date and the tax agent must come before the money.
 
-**Registration is the only door, and it closes at the moment of departure.** Deferral and the reduction when prices fall both require the registration to have been filed before you leave; only the cancellation on returning within five years survives without it. The assessment period is seven years by default, five if you registered. So the timeline in this tool colours exactly one line red, and it is not the three-month mark that everyone assumes.
+**Registration is the main door, and it closes at the moment of departure.** Deferral and the reduction when prices fall both require the registration to have been filed before you leave; only the cancellation on returning within five years survives without it. The assessment period is seven years by default, five if you registered. So the timeline in this tool colours exactly one line red, and it is not the three-month mark that everyone assumes.
 
 **The calendar has a hole the tax authority has not filled.** "Exactly three months before" means the anniversary day — the NTA's FAQ works the example: leave on 14 July, value on 14 April. But five days a year have no such anniversary: 29, 30 and 31 May, 31 July, and 31 December. Civil Code reasoning suggests the last day of the month; the NTA does not say. Rounding silently would produce a number that looks right and is not, so the tool refuses to decide, explains why, and points out that registering a tax agent makes the problem vanish.
 
 The tool does not fetch exchange rates or share prices. A fetched rate looks authoritative and is probably the wrong one for that taxpayer's valuation date. Instead it shows the distance from the threshold, which is what actually determines how much precision you need: far away, estimate freely; within ten per cent, go and get the real closing price.
 
-Built as one HTML file with no framework, no build step and no external requests. All statutory data lives in a single `RULES` object; all display text lives in a 185-key bilingual dictionary. 461 tests run against the shipped file itself, including a jsdom pass that drives the actual interface and a suite that boots the page into deliberately impoverished environments — no `console`, a `console` that throws, `history` blocked by a sandbox, no clipboard, opened from `file://`. That last suite exists because a startup self-check logged through `console.info` and took the whole page down in a sandboxed preview, after 260 tests had passed. The tests had simply been running somewhere too comfortable.
+Built as one HTML file with no framework, no build step and no external requests. All statutory data lives in a single `RULES` object; all display text lives in a 185-key bilingual dictionary. The repository's `tests/run.js` holds 143 checks that anyone can run with `node tests/run.js`; they extract the code from the shipped file itself. During development the page was also driven through jsdom and booted into deliberately impoverished environments — no `console`, a `console` that throws, `history` blocked by a sandbox, no clipboard, opened from `file://`; those suites are not in the repository. That last kind exists because a startup self-check logged through `console.info` and took the whole page down in a sandboxed preview, after every other test had passed. The tests had simply been running somewhere too comfortable.
 
 **This tool is for residents of Japan.** The rule described is Japanese law and has no application elsewhere. The English interface exists so that English speakers can see what the tool does; it omits statutory references and procedural detail deliberately. The author is not a licensed tax accountant and this is not tax advice.
 

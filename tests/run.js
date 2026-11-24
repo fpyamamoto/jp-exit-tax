@@ -168,8 +168,21 @@ check("source: NTA No.2260 listed", E.RULES.sources.primary.some(s => /2260\.htm
   check("README: no 'every remedy is gone'", !/every remedy is gone/.test(readme));
   check("README: only the cancellation survives (en)", /only the cancellation on returning within five years survives without it/.test(readme));
   check("README: asset counts", readme.includes("数えるもの" + E.RULES.assets.included.length + "件／数えないもの" + E.RULES.assets.excludedCommon.length + "件"));
-  check("README: dictionary key count", readme.includes(Object.keys(E.I18N.ja).length + "-key bilingual dictionary"));
+  const nKeys = Object.keys(E.I18N.ja).length;
+  check("README: dictionary key count (en)", readme.includes(nKeys + "-key bilingual dictionary"));
+  check("README: dictionary key count (ja)", readme.includes("日英で" + nKeys + "キー"));
+  const nums = (readme.match(/日英で(\d+)キー|(\d+)-key bilingual/g) || []);
+  check("README: no other key counts", nums.length === 2, nums.join(","));
+  // plan C: only verifiable test counts in public text
+  for(const bad of ["461", "計461件", "80件", "121件", "203件", "57件", "522件", "260件", "60,000", "260 tests", "7回間違"]){
+    check("README: no unverifiable count '" + bad + "'", !readme.includes(bad));
+  }
+  check("README: main door (en)", /\*\*Registration is the main door, and it closes at the moment of departure\.\*\*/.test(readme));
+  check("README: 'どちらも' and the exception in brackets (ja)",
+        /どちらも「国外転出の時までに納税管理人の届出をする」ことが前提です（帰国したときの課税取消しだけは届出がなくても使えます）。飛行機に乗ってから気づいても、もう間に合いません。/.test(readme));
+  check("continuation (en): 'after the year you leave'", /the second year after the year you leave/.test(E.I18N.en.tl_continuationNotice));
 }
+
 eq("law as of", E.RULES.meta.lawAsOf, "2026-11-24");
 
 /* ---------- dictionaries ---------- */
@@ -190,6 +203,16 @@ eq("law as of", E.RULES.meta.lawAsOf, "2026-11-24");
     check("asset label a_" + a.key, ("a_" + a.key) in E.I18N.ja && ("a_" + a.key) in E.I18N.en);
     if(a.note) check("asset note a_" + a.note, ("a_" + a.note) in E.I18N.ja && ("a_" + a.note) in E.I18N.en);
   }
+}
+
+/* ---------- keep this last: the README states the number of checks in this file (ja and en) ---------- */
+{
+  const readme = fs.readFileSync(path.join(__dirname, "..", "README.md"), "utf8").replace(/\r\n/g, "\n");
+  const total = passed + failed + 1;   // including this check
+  const ja = (readme.match(/`tests\\run\.js` に試験が(\d+)件あります/) || [])[1];
+  const en = (readme.match(/`tests\/run\.js` holds (\d+) checks/) || [])[1];
+  check("README states the real number of checks (ja " + ja + ", en " + en + ", actual " + total + ")",
+        Number(ja) === total && Number(en) === total);
 }
 
 console.log(passed + " passed, " + failed + " failed");
